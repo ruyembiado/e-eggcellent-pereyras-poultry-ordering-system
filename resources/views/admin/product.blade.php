@@ -1,0 +1,66 @@
+@extends('layouts.auth') <!-- Extend the main layout -->
+
+@section('content')
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0">Products</h1>
+        <a href="{{ route('products.create') }}" class="btn btn-primary">Add Product</a>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Product Image</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Date Created</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($products as $key => $product)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td>
+                                    <img src="{{ asset($product->product_image) }}" alt="Product Image" class="img-fluid"
+                                        width="70">
+                                </td>
+                                <td>{{ $product->product_name }}</td>
+                                <td>₱{{ number_format($product->product_price, 2) }}</td>
+                                <td>
+                                    <span class="badge {{ $product->status == 'Available' ? 'bg-success' : 'bg-danger' }}">
+                                        {{ ucfirst($product->status) }}
+                                    </span>
+                                </td>
+                                <td>{{ $product->created_at->format('Y-m-d') }}</td>
+                                <td>
+                                    <a href="{{ route('products.edit', $product->id) }}"
+                                        class="btn btn-warning btn-sm">Edit</a>
+                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                        onsubmit="return confirmDelete(event)" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection
+
+<script>
+    function confirmDelete(event) {
+        if (!confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+            event.preventDefault();
+        }
+    }
+</script>
