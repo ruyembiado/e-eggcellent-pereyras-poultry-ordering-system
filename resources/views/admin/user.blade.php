@@ -37,7 +37,7 @@
                                         {{ ucfirst($user->status) }}
                                     </span>
                                 </td>
-                                <td>{{ $user->created_at->format('Y-m-d') }}</td>
+                                <td>{{ $user->created_at->format('Y-m-d H:i:s a') }}</td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         {{-- <a href="" class="btn btn-warning btn-sm">Edit</a>

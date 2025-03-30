@@ -26,10 +26,10 @@
 <body>
     <div class="wrapper">
         <div class="main">
-            <nav class="navbar-expand px-4 py-3 bg-dark shadow-sm">
+            <nav class="navbar-expand px-4 bg-dark shadow-sm">
                 <div class="d-flex justify-content-between flex-wrap align-items-center">
-                    <div class="d-flex flex-wrap">
-                        <h1 class="eggcellent-title text-light">E-EGGCELLENT PORTAL</h1>
+                    <div class="d-flex flex-wrap align-items-center">
+                        <img src="{{ asset('img/eggcellent-logo.webp') }}" width="70" alt="pereyras-logo"><h1 class="eggcellent-title text-light">E-EGGCELLENT PORTAL</h1>
                     </div>
                     <div class="d-flex align-items-center gap-5">
                         <a href="/" class="text-light">Home</a>
@@ -37,6 +37,9 @@
                         <a href="/shop" class="text-light">Shop</a>
                         @if (auth()->check())
                             <a href="/cart" class="text-light"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+                            @if (auth()->user()->user_type == 'admin')
+                                <a href="/dashboard" class="text-light">Dashboard</a>
+                            @endif
                             <ul class="navbar-nav ms-auto">
                                 <span class="m-auto me-1 text-light">{{ Str::ucfirst(auth()->user()->username) }}</span>
                                 <li class="nav-item dropdown">
@@ -48,7 +51,7 @@
                                         </a>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end rounded animated--fade-in">
-                                        <a class="dropdown-item" href="#">
+                                        {{-- <a class="dropdown-item" href="#">
                                             <i class="text-primary fas fa-user fa-sm fa-fw mr-2"></i>
                                             Profile
                                         </a>
@@ -56,7 +59,7 @@
                                             <i class="text-primary fas fa-cogs fa-sm fa-fw mr-2"></i>
                                             Settings
                                         </a>
-                                        <div class="dropdown-divider"></div>
+                                        <div class="dropdown-divider"></div> --}}
                                         <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal"
                                             data-target="#logoutModal">
                                             <i class="text-primary fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>

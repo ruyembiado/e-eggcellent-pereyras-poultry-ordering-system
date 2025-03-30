@@ -37,7 +37,7 @@
                                         {{ ucfirst($product->status) }}
                                     </span>
                                 </td>
-                                <td>{{ $product->created_at->format('Y-m-d') }}</td>
+                                <td>{{ $product->created_at->format('Y-m-d H:i:s a') }}</td>
                                 <td>
                                     <a href="{{ route('products.edit', $product->id) }}"
                                         class="btn btn-warning btn-sm">Edit</a>

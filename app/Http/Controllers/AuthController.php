@@ -18,17 +18,25 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (auth()->attempt($credentials)) {
-            if (auth()->user()->user_type == 'admin') {
-                return view('admin.dashboard')->with('success', 'Login successful');
+            $user = auth()->user();
+
+            if ($user->status === 'active') {
+                if ($user->user_type == 'admin') {
+                    return view('admin.dashboard')->with('success', 'Login successful');
+                } else {
+                    return redirect('/')->with('success', 'Login successful');
+                }
             } else {
-                return redirect('/')->with('success', 'Login successful');
+                auth()->logout();
+                return back()
+                    ->withErrors(['error' => 'Your account is not yet active.'])
+                    ->withInput($request->only('email'));
             }
         }
 
         return back()
             ->withErrors(['error' => 'The provided credentials do not match our records.'])
-            ->withInput($request->only('email'))
-            ->with('form_type', 'login');
+            ->withInput($request->only('email'));
     }
 
     public function register(Request $request)

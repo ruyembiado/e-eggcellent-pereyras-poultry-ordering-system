@@ -27,10 +27,10 @@
 <body>
     <div class="wrapper">
         <aside id="sidebar" class="bg-theme-primary expand">
-            <div class="d-flex gap-3 justify-content-center pt-4">
-                <button class="toggle-btn" type="button">
-                    <i class="fa-solid text-white fa fa-bars fs-5"></i>
-                </button>
+            <div class="d-flex gap-1 justify-content-center pt-4">
+                <div class="site-log">
+                    <img src="{{ asset('img/eggcellent-logo.webp') }}" width="70" alt="pereyras-logo">
+                </div>
                 <div class="sidebar-logo">
                     <a href="/dashboard">E-EGGCELLENT</a>
                 </div>
@@ -71,6 +71,9 @@
         <div class="main bg-gradient">
             <nav class="navbar navbar-expand px-4 py-3 bg-theme-secondary">
                 <div class="navbar-collapse collapse">
+                    <button class="toggle-btn" type="button">
+                        <i class="fa-solid text-dark fa fa-bars fs-5"></i>
+                    </button>
                     <ul class="navbar-nav ms-auto">
                         @auth
                             @if (auth()->user()->user_type == 'admin')
@@ -86,7 +89,7 @@
                                 </a>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end rounded animated--fade-in">
-                                <a class="dropdown-item" href="#">
+                                {{-- <a class="dropdown-item" href="#">
                                     <i class="text-primary fas fa-user fa-sm fa-fw mr-2"></i>
                                     Profile
                                 </a>
@@ -94,8 +97,9 @@
                                     <i class="text-primary fas fa-cogs fa-sm fa-fw mr-2"></i>
                                     Settings
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal">
+                                <div class="dropdown-divider"></div> --}}
+                                <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal"
+                                    data-target="#logoutModal">
                                     <i class="text-primary fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
                                     Logout
                                 </a>
