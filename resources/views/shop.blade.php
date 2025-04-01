@@ -6,6 +6,16 @@
     </div>
 
     <main class="content px-3 py-4 col-12" id="page-top">
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row justify-content-start align-items-center py-5 g-4">
                 @forelse ($products as $product)
@@ -22,8 +32,50 @@
                                     </span>
                                 </div>
                                 @if (auth()->check())
-                                    <a href="#" class="text-dark btn btn-warning border-light bg-theme-secondary p-1 mt-2"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+                                    <button class="text-dark btn btn-warning border-light bg-theme-secondary p-1 mt-2"
+                                        data-bs-toggle="modal" data-bs-target="#productModal{{ $product->id }}">
+                                        <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                    </button>
                                 @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Modal -->
+                    <div class="modal fade" id="productModal{{ $product->id }}" tabindex="-1"
+                        aria-labelledby="productModalLabel{{ $product->id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <form action="{{ route('cart.add') }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="d-flex flex-row align-items-start justify-content-start gap-3">
+                                            <div class="product-img">
+                                                <img src="{{ asset($product->product_image) }}" class="img-fluid mb-3"
+                                                    alt="{{ $product->product_name }}">
+                                            </div>
+                                            <div class="product-meta">
+                                                <h5 class="modal-title" id="productModalLabel{{ $product->id }}">
+                                                    {{ $product->product_name }}</h5>
+                                                <p class="mb-1 mt-2">Price:
+                                                    ₱{{ number_format($product->product_price, 2) }}</p>
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <label for="quantity{{ $product->id }}">Quantity:</label>
+                                                <input type="number" name="quantity" id="quantity{{ $product->id }}"
+                                                    class="form-control" value="1" min="1"
+                                                    onchange="updateSubtotal({{ $product->id }}, {{ $product->product_price }})">
+                                                <p class="mt-2"><strong>Subtotal:</strong> ₱<span
+                                                        id="subtotal{{ $product->id }}">{{ number_format($product->product_price, 2) }}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-warning">Add to Cart</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -33,4 +85,12 @@
             </div>
         </div>
     </main>
+
+    <script>
+        function updateSubtotal(productId, price) {
+            let quantity = document.getElementById(`quantity${productId}`).value;
+            let subtotal = quantity * price;
+            document.getElementById(`subtotal${productId}`).innerText = subtotal.toFixed(2);
+        }
+    </script>
 @endsection

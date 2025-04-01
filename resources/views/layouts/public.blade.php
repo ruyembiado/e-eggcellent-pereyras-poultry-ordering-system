@@ -29,7 +29,8 @@
             <nav class="navbar-expand px-4 bg-dark shadow-sm">
                 <div class="d-flex justify-content-between flex-wrap align-items-center">
                     <div class="d-flex flex-wrap align-items-center">
-                        <img src="{{ asset('img/eggcellent-logo.webp') }}" width="70" alt="pereyras-logo"><h1 class="eggcellent-title text-light">E-EGGCELLENT PORTAL</h1>
+                        <img src="{{ asset('img/eggcellent-logo.webp') }}" width="70" alt="pereyras-logo">
+                        <h1 class="eggcellent-title text-light">E-EGGCELLENT PORTAL</h1>
                     </div>
                     <div class="d-flex align-items-center gap-5">
                         <a href="/" class="text-light">Home</a>
@@ -37,9 +38,7 @@
                         <a href="/shop" class="text-light">Shop</a>
                         @if (auth()->check())
                             <a href="/cart" class="text-light"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
-                            @if (auth()->user()->user_type == 'admin')
-                                <a href="/dashboard" class="text-light">Dashboard</a>
-                            @endif
+                            <a href="/dashboard" class="text-light">Dashboard</a>
                             <ul class="navbar-nav ms-auto">
                                 <span class="m-auto me-1 text-light">{{ Str::ucfirst(auth()->user()->username) }}</span>
                                 <li class="nav-item dropdown">

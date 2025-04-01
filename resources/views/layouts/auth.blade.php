@@ -42,30 +42,52 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="/products/all" class="sidebar-link">
-                        <i class="fa-solid fa-egg"></i>
-                        <span>Products</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="/request-orders" class="sidebar-link">
-                        <i class="fa-regular fa-pen-to-square"></i>
-                        <span>Request Orders</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="/users" class="sidebar-link">
-                        <i class="fa fa-users"></i>
-                        <span>Users</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="/reports" class="sidebar-link">
-                        <i class="fa-regular fa-rectangle-list"></i>
-                        <span>Reports</span>
-                    </a>
-                </li>
+                @if (auth()->user()->user_type == 'admin')
+                    <li class="sidebar-item">
+                        <a href="/products/all" class="sidebar-link">
+                            <i class="fa-solid fa-egg"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="/request-orders" class="sidebar-link">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                            <span>Request Orders</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="/users" class="sidebar-link">
+                            <i class="fa fa-users"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="/reports" class="sidebar-link">
+                            <i class="fa-regular fa-rectangle-list"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                @endif
+                @if (auth()->user()->user_type == 'customer')
+                    <li class="sidebar-item">
+                        <a href="/shop" class="sidebar-link">
+                            <i class="fa-solid fa-egg"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="/cart" class="sidebar-link">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span>Cart</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="/orders" class="sidebar-link">
+                            <i class="fa-solid fa-file-invoice"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </aside>
         <div class="main bg-gradient">
@@ -76,9 +98,11 @@
                     </button>
                     <ul class="navbar-nav ms-auto">
                         @auth
-                            @if (auth()->user()->user_type == 'admin')
-                                <span class="m-auto me-1">Admin</span>
-                            @endif
+                            <span class="m-auto me-1">
+                                @auth
+                                    {{ auth()->user()->name }}
+                                @endauth
+                            </span>
                         @endauth
                         <li class="nav-item dropdown">
                             <a href="#" data-bs-toggle="dropdown" class="nav-stat-icon pe-md-0">

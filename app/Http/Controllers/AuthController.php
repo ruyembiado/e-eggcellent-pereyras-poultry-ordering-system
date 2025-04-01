@@ -67,7 +67,11 @@ class AuthController extends Controller
 
     public function dashboard()
     {
-        return view('admin.dashboard');
+        if (auth()->user()->user_type == 'admin') {
+            return view('admin.dashboard');
+        } else {
+            return view('customer.dashboard');
+        }
     }
 
     public function logout()
