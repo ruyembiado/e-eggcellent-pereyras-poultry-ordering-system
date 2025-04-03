@@ -56,20 +56,24 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
         }
 
-        $totalAmount = $cartItems->sum('subtotal');
+        $totalAmount = $cartItems->sum(function ($item) {
+            return $item->product->product_price * $item->quantity;
+        });
 
         $order = Order::create([
             'user_id' => auth()->id(),
+            'order_number' => 'EGG-' . strtoupper(uniqid()),
             'total_amount' => $totalAmount,
             'status' => 'Pending',
         ]);
 
         foreach ($cartItems as $item) {
             OrderItem::create([
-                'order_id' => $order->id,
+                'order_id' => $order->id, 
                 'product_id' => $item->product_id,
+                'price' => $item->product->product_price,
                 'quantity' => $item->quantity,
-                'subtotal' => $item->subtotal,
+                'subtotal' => $item->product->product_price * $item->quantity,
             ]);
         }
 

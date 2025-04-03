@@ -22,6 +22,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if ($cartItems->isEmpty())
+                            <tr>
+                                <td colspan="7" class="text-center">Your cart is empty.</td>
+                            </tr>
+                        @endif
                         @foreach ($cartItems as $key => $item)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
@@ -53,7 +58,10 @@
         <h4>Total: ₱{{ number_format($cartTotal, 2) }}</h4>
     </div>
     <div class="d-flex justify-content-end mt-3">
-        <a href="{{ route('cart.checkout') }}" class="btn btn-success">Proceed to Checkout</a>
+        <form action="{{ route('cart.checkout') }}" method="POST" class="d-inline">
+            @csrf
+            <button type="submit" class="btn btn-success">Proceed to Checkout</button>
+        </form>
     </div>
 @endsection
 
