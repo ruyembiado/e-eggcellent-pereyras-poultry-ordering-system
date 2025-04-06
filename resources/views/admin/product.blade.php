@@ -4,7 +4,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0">Products</h1>
-        <a href="{{ route('products.create') }}" class="btn btn-primary">Add Product</a>
+        <a href="{{ route('product.create') }}" class="btn btn-primary">Add Product</a>
     </div>
 
     <div class="card shadow mb-4">
@@ -34,14 +34,14 @@
                                 <td>₱{{ number_format($product->product_price, 2) }}</td>
                                 <td>
                                     <span class="badge {{ $product->status == 'Available' ? 'bg-success' : 'bg-danger' }}">
-                                        {{ ucfirst($product->status) }}
+                                        {{ $product->status }}
                                     </span>
                                 </td>
                                 <td>{{ $product->created_at->format('Y-m-d H:i:s a') }}</td>
                                 <td>
-                                    <a href="{{ route('products.edit', $product->id) }}"
+                                    <a href="{{ route('product.edit', $product->id) }}"
                                         class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                    <form action="{{ route('product.destroy', $product->id) }}" method="POST"
                                         onsubmit="return confirmDelete(event)" style="display: inline;">
                                         @csrf
                                         @method('DELETE')

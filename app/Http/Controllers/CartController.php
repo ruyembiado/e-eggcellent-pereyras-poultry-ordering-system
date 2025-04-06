@@ -48,8 +48,12 @@ class CartController extends Controller
         return back()->with('success', 'Product removed from cart!');
     }
 
-    public function checkout()
+    public function checkout(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Please login to proceed with checkout.');
+        }
+
         $cartItems = Cart::where('user_id', auth()->id())->get();
 
         if ($cartItems->isEmpty()) {
@@ -64,12 +68,13 @@ class CartController extends Controller
             'user_id' => auth()->id(),
             'order_number' => 'EGG-' . strtoupper(uniqid()),
             'total_amount' => $totalAmount,
+            'shipping_address' => $request->shipping_address,
             'status' => 'Pending',
         ]);
 
         foreach ($cartItems as $item) {
             OrderItem::create([
-                'order_id' => $order->id, 
+                'order_id' => $order->id,
                 'product_id' => $item->product_id,
                 'price' => $item->product->product_price,
                 'quantity' => $item->quantity,
@@ -79,6 +84,22 @@ class CartController extends Controller
 
         Cart::where('user_id', auth()->id())->delete();
 
-        return redirect()->route('orders.index')->with('success', 'Order placed successfully!');
+        return redirect()->route('order.index')->with('success', 'Order placed successfully!');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'quantity' => 'required|integer|min:1'
+        ]);
+
+        $cartItem = Cart::findOrFail($id);
+        $product = $cartItem->product;
+
+        $cartItem->quantity = $request->quantity;
+        $cartItem->subtotal = $product->product_price * $request->quantity;
+        $cartItem->save();
+
+        return redirect()->back()->with('success', 'Cart updated successfully.');
     }
 }

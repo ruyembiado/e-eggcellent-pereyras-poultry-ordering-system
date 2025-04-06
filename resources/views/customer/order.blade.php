@@ -17,7 +17,7 @@
                             <th>Name</th>
                             <th>Status</th>
                             <th>Total Amount</th>
-                            <th>Order Date</th>
+                            <th>Date of Request</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -31,6 +31,7 @@
                                     <span class="badge 
                                         @if($order->status == 'Pending') bg-warning
                                         @elseif($order->status == 'Completed') bg-success
+                                        @elseif($order->status == 'Accepted') bg-info
                                         @elseif($order->status == 'Cancelled') bg-danger
                                         @endif">
                                         {{ $order->status }}
@@ -39,7 +40,7 @@
                                 <td>₱{{ number_format($order->total_amount, 2) }}</td>
                                 <td>{{ $order->created_at->format('Y-m-d H:i A') }}</td>
                                 <td>
-                                    <a href="{{ route('orders.view', $order->id) }}" class="btn btn-primary btn-sm">View</a>
+                                    <a href="{{ route('order.view', $order->id) }}" class="btn btn-primary btn-sm">View</a>
                                 </td>
                             </tr>
                         @endforeach

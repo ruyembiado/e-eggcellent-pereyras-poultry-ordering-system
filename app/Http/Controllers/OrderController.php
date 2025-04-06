@@ -9,13 +9,40 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('user_id', auth()->id())->with('user')->get();
-        return view('customer.order', compact('orders'));
+        if (auth()->user()->user_type == 'admin') {
+            $orders = Order::orderBy('created_at', 'desc')->with('items')->get();
+            return view('admin.request_order', compact('orders'));
+        } else {
+            $orders = Order::where('user_id', auth()->id())->orderBy('created_at', 'desc')->with('user')->get();
+            return view('customer.order', compact('orders'));
+        }
     }
 
     public function show($id)
     {
         $order = Order::with('items.product')->findOrFail($id);
-        return view('customer.order_view', compact('order'));
+        if (auth()->user()->user_type == 'admin') {
+            return view('admin.order_view', compact('order'));
+        } else {
+            return view('customer.order_view', compact('order'));
+        }
+    }
+
+    public function accept(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+        $order->status = 'Accepted';
+        $order->save();
+
+        return redirect()->back()->with('success', 'Order has been accepted.');
+    }
+
+    public function decline(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+        $order->status = 'Declined';
+        $order->save();
+
+        return redirect()->back()->with('success', 'Order has been declined.');
     }
 }

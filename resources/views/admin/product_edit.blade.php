@@ -8,7 +8,7 @@
 
     <div class="card shadow col-6 mb-4">
         <div class="card-body">
-            <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="col-12 mb-2">
                     <label for="product_name" class="form-label">Product Name</label>
@@ -53,8 +53,8 @@
                         <option value="">-- Select Status --</option>
                         <option value="Available" {{ old('status', $product->status) == 'Available' ? 'selected' : '' }}>
                             Available</option>
-                        <option value="not_available"
-                            {{ old('status', $product->status) == 'not_available' ? 'selected' : '' }}>Not available
+                        <option value="Out of Stock"
+                            {{ old('status', $product->status) == 'Out of Stock' ? 'selected' : '' }}>Out of Stock
                         </option>
                     </select>
                     @error('status')

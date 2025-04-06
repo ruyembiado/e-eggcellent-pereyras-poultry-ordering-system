@@ -34,9 +34,9 @@
                     </div>
                     <div class="d-flex align-items-center gap-5">
                         <a href="/" class="text-light">Home</a>
-                        {{-- <a href="#" class="text-light">Contact Us</a> --}}
+                        <a href="/contact-us" class="text-light">Contact Us</a>
                         <a href="/shop" class="text-light">Shop</a>
-                        @if (auth()->check())
+                        @if (auth()->check() && auth()->user()->user_type == 'customer')
                             <a href="/cart" class="text-light"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
                             <a href="/dashboard" class="text-light">Dashboard</a>
                             <ul class="navbar-nav ms-auto">

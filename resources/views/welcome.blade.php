@@ -49,7 +49,7 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-logo text-center">
-                <img src="https://st4.depositphotos.com/23677954/25889/v/450/depositphotos_258896166-stock-illustration-egg-icon-vector-logo-template.jpg"
+                <img src="{{ asset('img/eggcellent-logo.webp') }}"
                     alt="eggcellent-logo" class="img-fluid" width="200">
             </div>
             @if ($errors->any())
@@ -99,7 +99,7 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-logo text-center">
-                <img src="https://st4.depositphotos.com/23677954/25889/v/450/depositphotos_258896166-stock-illustration-egg-icon-vector-logo-template.jpg"
+                <img src="{{ asset('img/eggcellent-logo.webp') }}"
                     alt="eggcellent-logo" class="img-fluid" width="200">
             </div>
             @if ($errors->any())

@@ -14,7 +14,7 @@
                         <tr>
                             <th>No.</th>
                             <th>Name</th>
-                            <th>Username</th>
+                            {{-- <th>Username</th> --}}
                             <th>Email</th>
                             <th>Phone Number</th>
                             <th>Home Address</th>
@@ -28,7 +28,7 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->username }}</td>
+                                {{-- <td>{{ $user->username }}</td> --}}
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->phone_number }}</td>
                                 <td>{{ $user->home_address }}</td>

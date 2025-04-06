@@ -32,7 +32,8 @@
                                     </span>
                                 </div>
                                 @if (auth()->check())
-                                    <button class="text-dark btn btn-warning border-light bg-theme-secondary p-1 mt-2"
+                                    <button @if (auth()->user()->user_type != 'customer' || $product->status != 'Available') disabled @endif
+                                        class="text-dark btn btn-warning border-light bg-theme-secondary p-1 mt-2"
                                         data-bs-toggle="modal" data-bs-target="#productModal{{ $product->id }}">
                                         <i class="fa-solid fa-cart-shopping"></i> Add to Cart
                                     </button>
