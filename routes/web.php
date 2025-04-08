@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductController;
 
 /*
@@ -57,4 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/request-orders', [OrderController::class, 'index'])->name('request.index');
     Route::post('/request-order/accept', [OrderController::class, 'accept'])->name('order.accept');
     Route::post('/request-order/decline', [OrderController::class, 'decline'])->name('order.decline');
+    
+    // Report
+    Route::get('/reports', [ReportController::class, 'index'])->name('report.index');
 });

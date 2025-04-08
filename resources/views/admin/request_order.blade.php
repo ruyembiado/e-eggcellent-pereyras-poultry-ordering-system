@@ -31,7 +31,7 @@
                                     <span
                                         class="badge 
                                         @if ($order->status == 'Pending') bg-warning
-                                        @elseif($order->status == 'Completed') bg-success
+                                        @elseif($order->status == 'Done') bg-success
                                         @elseif($order->status == 'Accepted') bg-info
                                         @elseif($order->status == 'Cancelled') bg-danger @endif">
                                         {{ $order->status }}
@@ -44,22 +44,12 @@
                                         <a href="{{ route('order.view', $order->id) }}"
                                             class="btn btn-primary btn-sm">View</a>
                                         @if ($order->status == 'Pending')
-                                            <form action="{{ route('order.accept') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="order_id" value="{{ $order->id }}">
-                                                <button type="submit" class="btn btn-success btn-sm">Accept</button>
-                                            </form>
-                                            <form action="{{ route('order.decline') }}" method="POST">
+                                            <form action="{{ route('order.decline') }}" onsubmit="confirmCancel(event)" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="order_id" value="{{ $order->id }}">
                                                 <button type="submit" class="btn btn-danger btn-sm">Decline</button>
                                             </form>
                                         @endif
-                                        {{-- <form action="" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="order_id" value="{{ $order->id }}">
-                                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
-                                        </form> --}}
                                     </div>
                                 </td>
                             </tr>
@@ -70,3 +60,11 @@
         </div>
     </div>
 @endsection
+
+<script>
+    function confirmCancel(event) {
+        if (!confirm('Are you sure you want to decline this request order? This action cannot be undone.')) {
+            event.preventDefault();
+        }
+    }
+</script>

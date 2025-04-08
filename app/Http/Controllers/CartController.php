@@ -69,6 +69,7 @@ class CartController extends Controller
             'order_number' => 'EGG-' . strtoupper(uniqid()),
             'total_amount' => $totalAmount,
             'shipping_address' => $request->shipping_address,
+            'type_of_service' => $request->type_of_service,
             'status' => 'Pending',
         ]);
 

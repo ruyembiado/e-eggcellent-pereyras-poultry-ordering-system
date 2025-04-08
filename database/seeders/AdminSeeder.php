@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'Eggcellent Admin',
-                'gender' => 'Male',
+                'gender' => 'male',
                 'home_address' => '123 Admin Street',
                 'phone_number' => '09876543210',
                 'username' => 'admin',

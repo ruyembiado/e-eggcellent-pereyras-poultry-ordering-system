@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -22,7 +25,7 @@ class AuthController extends Controller
 
             if ($user->status === 'active') {
                 if ($user->user_type == 'admin') {
-                    return view('admin.dashboard')->with('success', 'Login successful');
+                    return redirect('/dashboard')->with('success', 'Login successful');
                 } else {
                     return redirect('/')->with('success', 'Login successful');
                 }
@@ -67,10 +70,86 @@ class AuthController extends Controller
 
     public function dashboard()
     {
-        if (auth()->user()->user_type == 'admin') {
-            return view('admin.dashboard');
+        $user = auth()->user();
+
+        $today = Carbon::today();
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $startOfYear = Carbon::now()->startOfYear();
+        $currentYear = Carbon::now()->year;
+
+        if ($user->user_type == 'admin') {
+            $ordersToday = Order::whereDate('created_at', $today)->count();
+            $ordersThisWeek = Order::where('created_at', '>=', $startOfWeek)->count();
+            $ordersThisMonth = Order::where('created_at', '>=', $startOfMonth)->count();
+            $ordersThisYear = Order::where('created_at', '>=', $startOfYear)->count();
+
+            // Get all orders for order table this month
+            $ordersMonth = Order::where('created_at', '>=', $startOfMonth)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            // Chart: Monthly Orders
+            $monthlyOrders = DB::table('orders')
+                ->select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
+                ->whereYear('created_at', $currentYear)
+                ->groupBy(DB::raw('MONTH(created_at)'))
+                ->orderBy('month')
+                ->get();
+
+            $ordersPerMonth = array_fill(1, 12, 0);
+            foreach ($monthlyOrders as $row) {
+                $ordersPerMonth[$row->month] = $row->total;
+            }
+
+            $months = [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            ];
+
+            return view('admin.dashboard', [
+                'ordersToday' => $ordersToday,
+                'ordersThisWeek' => $ordersThisWeek,
+                'ordersThisMonth' => $ordersThisMonth,
+                'ordersThisYear' => $ordersThisYear,
+                'orders' => $ordersMonth,
+                'ordersPerMonth' => array_values($ordersPerMonth),
+                'months' => $months,
+            ]);
+            
         } else {
-            return view('customer.dashboard');
+            $ordersToday = Order::where('user_id', $user->id)
+                ->whereDate('created_at', $today)
+                ->count();
+
+            $ordersThisWeek = Order::where('user_id', $user->id)
+                ->where('created_at', '>=', $startOfWeek)
+                ->count();
+
+            $ordersThisMonth = Order::where('user_id', $user->id)
+                ->where('created_at', '>=', $startOfMonth)
+                ->count();
+
+            $ordersThisYear = Order::where('user_id', $user->id)
+                ->where('created_at', '>=', $startOfYear)
+                ->count();
+
+            return view('customer.dashboard', [
+                'ordersToday' => $ordersToday,
+                'ordersThisWeek' => $ordersThisWeek,
+                'ordersThisMonth' => $ordersThisMonth,
+                'ordersThisYear' => $ordersThisYear,
+            ]);
         }
     }
 

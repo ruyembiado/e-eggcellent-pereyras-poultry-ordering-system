@@ -32,6 +32,10 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($request->order_id);
         $order->status = 'Accepted';
+        $order->delivery_date = $request->delivery_date;
+        if ($request->comment) {
+            $order->comment = $request->comment;
+        }
         $order->save();
 
         return redirect()->back()->with('success', 'Order has been accepted.');
@@ -40,9 +44,9 @@ class OrderController extends Controller
     public function decline(Request $request)
     {
         $order = Order::findOrFail($request->order_id);
-        $order->status = 'Declined';
+        $order->status = 'Cancelled';
         $order->save();
 
-        return redirect()->back()->with('success', 'Order has been declined.');
+        return redirect()->back()->with('success', 'Order has been cancelled.');
     }
 }

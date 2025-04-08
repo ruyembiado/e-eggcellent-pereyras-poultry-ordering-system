@@ -11,18 +11,23 @@
             <div class="mb-4">
                 <h4>Order Details</h4>
                 <p class="m-0"><strong>Name:</strong> {{ $order->user->name ?? 'N/A' }}</p>
+                <p class="m-0"><strong>Contact Number:</strong> {{ $order->user->phone_number ?? 'N/A' }}</p>
                 <p class="m-0"><strong>Delivery Address:</strong> {{ $order->shipping_address }}</p>
                 <p class="m-0"><strong>Status:</strong>
                     <span
                         class="badge 
                         @if ($order->status == 'Pending') bg-warning
-                        @elseif($order->status == 'Completed') bg-success
+                        @elseif($order->status == 'Done') bg-success
                         @elseif($order->status == 'Accepted') bg-info
                         @elseif($order->status == 'Cancelled') bg-danger @endif">
                         {{ $order->status }}
                     </span>
                 </p>
+                <p class="m-0"><strong>Order Number:</strong> {{ $order->order_number }}</p>
                 <p class="m-0"><strong>Order Date:</strong> {{ $order->created_at->format('Y-m-d H:i A') }}</p>
+                <p class="m-0"><strong>Delivery Schedule:</strong> {{ $order->delivery_date ?? '' }}</p>
+                <p class="m-0"><strong>Type of Service:</strong> {{ $order->type_of_service ?? '' }}</p>
+                <p class="m-0"><strong>Comment:</strong> {{ $order->comment ?? '' }}</p>
             </div>
 
             <h4>Order Items</h4>

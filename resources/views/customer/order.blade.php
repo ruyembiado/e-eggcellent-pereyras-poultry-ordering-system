@@ -30,7 +30,7 @@
                                 <td>
                                     <span class="badge 
                                         @if($order->status == 'Pending') bg-warning
-                                        @elseif($order->status == 'Completed') bg-success
+                                        @elseif($order->status == 'Done') bg-success
                                         @elseif($order->status == 'Accepted') bg-info
                                         @elseif($order->status == 'Cancelled') bg-danger
                                         @endif">

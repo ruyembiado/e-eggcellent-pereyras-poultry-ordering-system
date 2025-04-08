@@ -96,8 +96,18 @@
                                     Use my home address
                                 </label>
                             </div>
-                            <label for="shipping_address" class="form-label">New Delivery Address</label>
-                            <textarea class="form-control" id="shipping_address" name="shipping_address" rows="2" required></textarea>
+                            <div class="form-check ps-0 mb-3">
+                                <label for="shipping_address" class="form-label">Delivery Address</label>
+                                <textarea class="form-control" id="shipping_address" name="shipping_address" rows="2" required></textarea>
+                            </div>
+                            <div class="form-check ps-0 mb-3 col-3">
+                                <label for="type_of_service" class="form-label">Type of Service</label>
+                                <select name="type_of_service" class="form-control" id="type_of_service" required>
+                                    <option value="" disabled selected>Select Service</option>
+                                    <option value="Delivery">Delivery</option>
+                                    <option value="Pick-up">Pick-up</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -129,7 +139,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Confirm & Checkout</button>
                 </div>
             </form>
