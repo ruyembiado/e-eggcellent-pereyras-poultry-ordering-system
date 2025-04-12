@@ -262,7 +262,8 @@ h1.eggcellent-title {
     justify-content: center;
 }
 
-.welcome-text, .home-description {
+.welcome-text,
+.home-description {
     font-size: 30px;
     color: #fff;
     text-shadow: 1px 1px 1px #A45344;
@@ -298,7 +299,7 @@ h1.home-title {
 }
 
 .bg-theme-primary {
-    background-color:#212529;
+    background-color: #212529;
 }
 
 .bg-theme-secondary {
@@ -316,7 +317,7 @@ h1.home-title {
     justify-content: center;
     align-items: center;
     z-index: 1;
-    color: #fff; 
+    color: #fff;
     padding: 70px 0;
 }
 
@@ -327,10 +328,37 @@ h1.home-title {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); 
-    z-index: -1; 
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
 }
 
 .card.products-container {
     z-index: 0;
 }
+
+/* @media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #print-section,
+    #print-section * {
+        visibility: visible;
+    }
+
+    #print-section {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    .table {
+        border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+        border: 1px solid #dee2e6;
+    }
+} */

@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.css" />
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Print.js CSS -->
+    <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 
     <!-- Custom Styles -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
@@ -29,7 +31,9 @@
         <aside id="sidebar" class="bg-theme-primary expand">
             <div class="d-flex gap-1 justify-content-center pt-4">
                 <div class="site-log">
-                    <img src="{{ asset('img/eggcellent-logo.webp') }}" width="70" alt="pereyras-logo">
+                    <a href="/dashboard">
+                        <img src="{{ asset('img/eggcellent-logo.webp') }}" width="70" alt="pereyras-logo">
+                    </a>
                 </div>
                 <div class="sidebar-logo">
                     <a href="/dashboard">E-EGGCELLENT</a>
@@ -174,6 +178,9 @@
     <!-- FullCalendar JS -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 
+    <!-- Print.js JS -->
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
     <!--Custom Script -->
     <script src="{{ asset('js/script.js') }}"></script>
     <script>
@@ -187,7 +194,6 @@
         }
         hideAlerts();
     </script>
-
 </body>
 
 </html>

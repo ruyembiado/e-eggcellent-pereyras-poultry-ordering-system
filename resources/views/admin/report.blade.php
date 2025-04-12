@@ -21,7 +21,7 @@
                                 <div class="text-dark text-uppercase mb-1 mt-3">
                                     <strong>Daily Report</strong>
                                 </div>
-                                <a class="btn btn-sm btn-primary mt-2" href="">View Report</a>
+                                <a class="btn btn-sm btn-primary mt-2" href="{{ route('daily.report') }}">View Report</a>
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,20 @@
                                 <div class="text-dark text-uppercase mb-1 mt-3">
                                     <strong>Weekly Report</strong>
                                 </div>
-                                <a class="btn btn-sm btn-primary mt-2" href="">View Report</a>
+
+                                @php
+                                    $currentYear = now()->year;
+                                    $currentMonth = now()->month;
+                                    // Get the start of the current month
+                                    $startOfMonth = now()->startOfMonth();
+                                    // Get the current date's ISO week number relative to the start of the month
+                                    $currentWeek = now()->diffInWeeks($startOfMonth) + 1; // Add 1 to ensure the week starts at 1
+                                @endphp
+
+                                <a class="btn btn-sm btn-primary mt-2"
+                                    href="{{ route('weekly.report', ['year' => $currentYear, 'month' => $currentMonth, 'week' => $currentWeek]) }}">
+                                    View Report
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -59,7 +72,10 @@
                                 <div class="text-dark text-uppercase mb-1 mt-3">
                                     <strong>Monthly Report</strong>
                                 </div>
-                                <a class="btn btn-sm btn-primary mt-2" href="">View Report</a>
+                                <a class="btn btn-sm btn-primary mt-2"
+                                    href="{{ route('monthly.report', ['year' => now()->year, 'month' => now()->month]) }}">
+                                    View Report
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -78,7 +94,8 @@
                                 <div class="text-dark text-uppercase mb-1 mt-3">
                                     <strong>Yearly Report</strong>
                                 </div>
-                                <a class="btn btn-sm btn-primary mt-2" href="">View Report</a>
+                                <a class="btn btn-sm btn-primary mt-2"
+                                    href="{{ route('yearly.report', ['year' => now()->year]) }}">View Report</a>
                             </div>
                         </div>
                     </div>
