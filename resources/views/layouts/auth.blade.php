@@ -117,10 +117,11 @@
                                 </a>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end rounded animated--fade-in">
-                                {{-- <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('user.profile') }}">
                                     <i class="text-primary fas fa-user fa-sm fa-fw mr-2"></i>
                                     Profile
                                 </a>
+                                {{-- 
                                 <a class="dropdown-item" href="#">
                                     <i class="text-primary fas fa-cogs fa-sm fa-fw mr-2"></i>
                                     Settings

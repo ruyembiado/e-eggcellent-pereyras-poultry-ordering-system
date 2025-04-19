@@ -42,6 +42,8 @@ Route::middleware(['auth'])->group(function () {
     // User
     Route::get('/users', [UserController::class, 'index']);
     Route::put('activation-status/{id}', [UserController::class, 'user_activation'])->name('user.activation');
+    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::post('/update-profile', [UserController::class, 'updateProfile'])->name('update.profile');
 
     // Cart
     Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
