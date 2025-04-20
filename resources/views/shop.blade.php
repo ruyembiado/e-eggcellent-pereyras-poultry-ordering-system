@@ -21,7 +21,7 @@
                 @forelse ($products as $product)
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center">
                         <div class="card products-container shadow h-100 w-100">
-                            <img src="{{ asset($product->product_image) }}" class="card-img-top"
+                            <img src="{{ asset($product->product_image ?? 'img/default-egg.jpg') }}" class="card-img-top"
                                 alt="{{ $product->product_name }}" style="object-fit: cover; height: 200px;">
                             <div class="card-body d-flex flex-column justify-content-between">
                                 <h6 class="card-title">{{ $product->product_name }}</h6>

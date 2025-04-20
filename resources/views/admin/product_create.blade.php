@@ -23,7 +23,7 @@
                     <label for="product_image" class="form-label">Product Image</label>
                     <input type="file" name="product_image"
                         class="form-control @error('product_image') is-invalid @enderror" id="product_image"
-                        value="{{ old('product_image') }}" required>
+                        value="{{ old('product_image') }}">
                     @error('product_image')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror

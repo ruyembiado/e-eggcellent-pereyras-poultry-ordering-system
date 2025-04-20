@@ -27,8 +27,8 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>
-                                    <img src="{{ asset($product->product_image) }}" alt="Product Image" class="img-fluid"
-                                        width="70">
+                                    <img src="{{ asset($product->product_image ?? 'img/default-egg.jpg') }}"
+                                        alt="Product Image" class="img-fluid" width="70">
                                 </td>
                                 <td>{{ $product->product_name }}</td>
                                 <td>₱{{ number_format($product->product_price, 2) }}</td>
