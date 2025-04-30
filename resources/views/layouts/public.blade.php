@@ -27,7 +27,7 @@
     <div class="wrapper">
         <div class="main">
             <nav class="navbar-expand px-4 bg-dark shadow-sm">
-                <div class="d-flex justify-content-between flex-wrap align-items-center">
+                <div class="col-10 m-auto d-flex justify-content-between flex-wrap align-items-center">
                     <div class="d-flex flex-wrap align-items-center">
                         <img src="{{ asset('img/eggcellent-logo.webp') }}" width="70" alt="pereyras-logo">
                         <h1 class="eggcellent-title text-light">E-EGGCELLENT PORTAL</h1>

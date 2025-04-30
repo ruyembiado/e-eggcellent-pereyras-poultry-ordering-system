@@ -12,7 +12,7 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="container-fluid">
+        <div class="col-10 m-auto container-fluid">
             <div class="row justify-content-center align-items-center gap-3">
                 <div class="title-container">
                     <h6 class="welcome-text m-0">Welcome to</h6>
