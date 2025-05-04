@@ -16,10 +16,10 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="container-fluid">
+        <div class="container-fluid col-10 mx-auto">
             <div class="row justify-content-start align-items-center py-5 g-4">
                 @forelse ($products as $product)
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 d-flex flex-wrap justify-content-center">
                         <div class="card products-container shadow h-100 w-100">
                             <img src="{{ asset($product->product_image ?? 'img/default-egg.jpg') }}" class="card-img-top"
                                 alt="{{ $product->product_name }}" style="object-fit: cover; height: 200px;">

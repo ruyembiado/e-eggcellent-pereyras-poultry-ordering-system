@@ -80,9 +80,9 @@
                                     </tr>
                                 @endforeach
                                 <tr class="bg-light">
-                                    <td colspan="2" class="text-start">Grand Total:</td>
-                                    <td>{{ $report->sum('quantity') }}</td>
-                                    <td>₱{{ number_format($report->sum('total'), 2) }}</td>
+                                    <td colspan="2" class="text-start h6">Grand Total:</td>
+                                    <td class="h6">{{ $report->sum('quantity') }}</td>
+                                    <td class="h6">₱{{ number_format($report->sum('total'), 2) }}</td>
                                 </tr>
                             @endif
                         </tbody>

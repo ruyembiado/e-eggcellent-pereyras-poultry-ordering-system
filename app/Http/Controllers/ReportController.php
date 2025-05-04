@@ -19,7 +19,8 @@ class ReportController extends Controller
 
         $orders = Order::with(['items.product', 'user'])
             ->whereDate('created_at', $date)
-            ->where('status', 'Delivered')
+            ->where('status', 'Accepted')
+            ->orWhere('status', 'Delivered')
             ->get();
 
         $report = $orders->groupBy('user_id')->map(function ($userOrders) {
@@ -66,7 +67,8 @@ class ReportController extends Controller
         // Retrieve orders within the selected month
         $orders = Order::with(['items.product', 'user'])
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->where('status', 'Delivered')
+            ->where('status', 'Accepted')
+            ->orWhere('status', 'Delivered')
             ->get();
 
         // Group orders by week within the selected month
@@ -176,7 +178,8 @@ class ReportController extends Controller
 
         $orders = Order::with(['items.product', 'user'])
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->where('status', 'Delivered')
+            ->where('status', 'Accepted')
+            ->orWhere('status', 'Delivered')
             ->get();
 
         $report = $orders->groupBy(function ($order) {
@@ -221,7 +224,8 @@ class ReportController extends Controller
 
         $orders = Order::with(['items.product', 'user'])
             ->whereBetween('created_at', [$startDate, $endDate])
-            // ->where('status', 'Delivered')
+            ->where('status', 'Accepted')
+            ->orWhere('status', 'Delivered')
             ->get();
 
         $report = $orders->groupBy(function ($order) {
