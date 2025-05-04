@@ -1,7 +1,7 @@
 @extends('layouts.public') <!-- Extend the main layout -->
 
 @section('content')
-    <main class="content px-3 py-4 col-12 home-bg" id="page-top">
+    <main class="content px-0 px-sm-4 py-0 py-sm-4 col-12 home-bg" id="page-top">
         @if (session('success'))
             <div class="alert alert-success" role="alert">
                 {{ session('success') }}
@@ -12,7 +12,7 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="col-10 m-auto container-fluid">
+        <div class="col-12 col-sm-10 m-auto container-fluid">
             <div class="row justify-content-center align-items-center gap-3">
                 <div class="title-container">
                     <h6 class="welcome-text m-0">Welcome to</h6>

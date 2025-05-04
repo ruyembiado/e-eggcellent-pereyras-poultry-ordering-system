@@ -26,48 +26,55 @@
 <body>
     <div class="wrapper">
         <div class="main">
-            <nav class="navbar-expand px-4 bg-dark shadow-sm">
-                <div class="col-10 m-auto d-flex justify-content-between flex-wrap align-items-center">
-                    <div class="d-flex flex-wrap align-items-center">
+            <nav class="navbar navbar-expand-lg px-0 px-sm-4 bg-dark shadow-sm">
+                <div class="container">
+                    <a class="navbar-brand d-flex align-items-center text-light" href="/">
                         <img src="{{ asset('img/eggcellent-logo.webp') }}" width="70" alt="pereyras-logo">
-                        <h1 class="eggcellent-title text-light">E-EGGCELLENT PORTAL</h1>
-                    </div>
-                    <div class="d-flex align-items-center gap-5">
-                        <a href="/" class="text-light">Home</a>
-                        <a href="/contact-us" class="text-light">Contact Us</a>
-                        <a href="/shop" class="text-light">Shop</a>
-                        @if (auth()->check() && auth()->user()->user_type == 'customer')
-                            <a href="/cart" class="text-light"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
-                            <a href="/dashboard" class="text-light">Dashboard</a>
-                            <ul class="navbar-nav ms-auto">
-                                <span class="m-auto me-1 text-light">{{ Str::ucfirst(auth()->user()->username) }}</span>
-                                <li class="nav-item dropdown">
-                                    <a href="#" data-bs-toggle="dropdown" class="nav-stat-icon pe-md-0">
-                                        <a data-bs-toggle="dropdown" class="nav-stat-icon pe-md-0"
-                                            title="Google, Chromium project, BSD &lt;http://opensource.org/licenses/bsd-license.php&gt;, via Wikimedia Commons"
-                                            href="https://commons.wikimedia.org/wiki/File:Profile_avatar_placeholder_large.png">
-                                            <i class="text-light fas fa-user-circle avatar"></i>
-                                        </a>
+                        <h1 class="eggcellent-title text-light ms-2 mb-0 d-none d-sm-block">E-EGGCELLENT PORTAL</h1>
+                    </a>
+
+                    <button class="navbar-toggler text-dark bg-light" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarContent">
+                        <span class="navbar-toggler-icon text-ligh"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+                        <ul class="navbar-nav gap-3 align-items-center">
+                            <li class="nav-item">
+                                <a class="nav-link text-light" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" href="/contact-us">Contact Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" href="/shop">Shop</a>
+                            </li>
+
+                            @if (auth()->check() && auth()->user()->user_type == 'customer')
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" href="/cart">
+                                        <i class="fa-solid fa-cart-shopping"></i> Cart
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-end rounded animated--fade-in">
-                                        {{-- <a class="dropdown-item" href="#">
-                                            <i class="text-primary fas fa-user fa-sm fa-fw mr-2"></i>
-                                            Profile
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="text-primary fas fa-cogs fa-sm fa-fw mr-2"></i>
-                                            Settings
-                                        </a>
-                                        <div class="dropdown-divider"></div> --}}
-                                        <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal"
-                                            data-target="#logoutModal">
-                                            <i class="text-primary fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
-                                            Logout
-                                        </a>
-                                    </div>
                                 </li>
-                            </ul>
-                        @endif
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" href="/dashboard">Dashboard</a>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-light" href="#" id="userDropdown"
+                                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-user-circle"></i> {{ Str::ucfirst(auth()->user()->username) }}
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('logout') }}">
+                                                <i class="text-primary fas fa-sign-out-alt fa-sm fa-fw me-2"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endif
+                        </ul>
                     </div>
                 </div>
             </nav>
