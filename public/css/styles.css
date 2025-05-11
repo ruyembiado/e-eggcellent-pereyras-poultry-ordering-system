@@ -336,29 +336,10 @@ h1.home-title {
     z-index: 0;
 }
 
-/* @media print {
-    body * {
-        visibility: hidden;
+@media print {
+    .print-footer {
+        position: fixed;
+        bottom: 0;
+        right: 0;
     }
-
-    #print-section,
-    #print-section * {
-        visibility: visible;
-    }
-
-    #print-section {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-
-    .table {
-        border-collapse: collapse;
-    }
-
-    .table th,
-    .table td {
-        border: 1px solid #dee2e6;
-    }
-} */
+}

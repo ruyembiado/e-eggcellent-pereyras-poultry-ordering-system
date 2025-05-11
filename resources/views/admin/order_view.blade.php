@@ -59,7 +59,7 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>
-                                    <img src="{{ asset($item->product->product_image) }}" alt="Product Image"
+                                    <img src="{{ asset($item->product->product_image ?? 'img/default-egg.jpg') }}" alt="Product Image"
                                         class="img-fluid" width="70">
                                 </td>
                                 <td>{{ $item->product->product_name }}</td>
@@ -71,7 +71,7 @@
                     </tbody>
                 </table>
                 <div class="total-amount text-end">
-                    <p><strong>Total Amount:</strong> ₱{{ number_format($order->total_amount, 2) }}</p>
+                    <strong><p>Total Amount: ₱{{ number_format($order->total_amount, 2) }}</p></strong>
                 </div>
             </div>
         </div>

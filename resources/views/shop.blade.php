@@ -52,8 +52,9 @@
                                     <div class="modal-body">
                                         <div class="d-flex flex-row align-items-start justify-content-start gap-3">
                                             <div class="product-img">
-                                                <img src="{{ asset($product->product_image) }}" class="img-fluid mb-3"
-                                                    alt="{{ $product->product_name }}">
+                                                <img src="{{ asset($product->product_image ?? 'img/default-egg.jpg') }}"
+                                                    style="width: 250px;height: 250px;object-fit: cover;"
+                                                    class="img-fluid mb-3" alt="{{ $product->product_name }}">
                                             </div>
                                             <div class="product-meta">
                                                 <h5 class="modal-title" id="productModalLabel{{ $product->id }}">

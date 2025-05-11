@@ -13,6 +13,13 @@ class AuthController extends Controller
 {
     public function index()
     {
+
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->user_type == 'admin') {
+                return redirect('/dashboard');
+            }
+        }
         return view('welcome');
     }
 
@@ -126,7 +133,6 @@ class AuthController extends Controller
                 'ordersPerMonth' => array_values($ordersPerMonth),
                 'months' => $months,
             ]);
-            
         } else {
             $ordersToday = Order::where('user_id', $user->id)
                 ->whereDate('created_at', $today)

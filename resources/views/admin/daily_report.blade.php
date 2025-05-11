@@ -88,6 +88,13 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="col-12 d-flex justify-content-end print-footer">
+                    <div class="d-flex flex-column justify-content-end align-items-center">
+                        <strong>ALLAN C. PEREYRA</strong>
+                        <span>Poultry Owner</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -98,7 +105,7 @@
                 printable: 'print-section',
                 type: 'html',
                 css: [
-                    // '{{ asset('css/styles.css') }}',
+                    '{{ asset('css/styles.css') }}',
                     'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'
                 ],
             });

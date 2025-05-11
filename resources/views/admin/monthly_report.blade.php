@@ -101,13 +101,20 @@
                                     $grandTotal = $report->sum('total');
                                 @endphp
                                 <tr class="bg-light">
-                                    <td colspan="2" class="text-start">Grand Total</td>
-                                    <td>{{ $totalQuantity }}</td>
-                                    <td>₱{{ number_format($grandTotal, 2) }}</td>
+                                    <td colspan="2" class="text-start h6">Grand Total</td>
+                                    <td class="h6">{{ $totalQuantity }}</td>
+                                    <td class="h6">₱{{ number_format($grandTotal, 2) }}</td>
                                 </tr>
                             @endif
                         </tbody>
                     </table>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end print-footer">
+                    <div class="d-flex flex-column justify-content-end align-items-center">
+                        <strong>ALLAN C. PEREYRA</strong>
+                        <span>Poultry Owner</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -119,6 +126,7 @@
                 printable: 'print-section',
                 type: 'html',
                 css: [
+                    '{{ asset('css/styles.css') }}',
                     'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'
                 ],
             });
