@@ -15,7 +15,7 @@
                             <label for="year" class="form-label mb-0">Select Year:</label>
                             <select name="year" id="year" class="form-control form-control-sm"
                                 onchange="this.form.submit()">
-                                @for ($y = date('Y'); $y >= 2020; $y--)
+                                @for ($y = date('Y'); $y >= 2024; $y--)
                                     <option value="{{ $y }}"
                                         {{ request('year', $selected_year) == $y ? 'selected' : '' }}>
                                         {{ $y }}
