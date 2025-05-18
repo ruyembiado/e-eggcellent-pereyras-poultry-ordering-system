@@ -15,7 +15,7 @@
                         <tr>
                             <th>No.</th>
                             <th>Product Image</th>
-                            <th>Product Name</th>
+                            <th>Product Name & Size</th>
                             <th>Price</th>
                             <th>Status</th>
                             <th>Date Created</th>
