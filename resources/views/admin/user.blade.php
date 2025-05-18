@@ -48,7 +48,7 @@
                                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form> --}}
                                         <form action="{{ route('user.activation', $user->id) }}" method="POST"
-                                            onsubmit="return confirmDelete(event)" style="display: inline;">
+                                            style="display: inline;">
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="status" value="{{ $user->status }}">
@@ -66,11 +66,3 @@
         </div>
     </div>
 @endsection
-
-<script>
-    function confirmDelete(event) {
-        if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
-            event.preventDefault();
-        }
-    }
-</script>
