@@ -66,7 +66,8 @@ class ReportController extends Controller
 
         // Retrieve orders within the selected month
         $orders = Order::with(['items.product', 'user'])
-            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<=', $endDate)
             ->where('status', 'Accepted')
             ->orWhere('status', 'Delivered')
             ->get();
@@ -153,7 +154,8 @@ class ReportController extends Controller
         $endDate = $startDate->copy()->endOfMonth();
 
         $orders = Order::with(['items.product', 'user'])
-            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<=', $endDate)
             ->where('status', 'Accepted')
             ->orWhere('status', 'Delivered')
             ->get();
