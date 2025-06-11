@@ -19,6 +19,7 @@
                         @if ($order->status == 'Pending') bg-warning
                         @elseif($order->status == 'Done') bg-success
                         @elseif($order->status == 'Accepted') bg-success
+                        @elseif($order->status == 'Delivered') bg-success
                         @elseif($order->status == 'Cancelled') bg-danger @endif">
                         {{ $order->status }}
                     </span>
