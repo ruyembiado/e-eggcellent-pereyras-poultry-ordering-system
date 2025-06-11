@@ -106,8 +106,12 @@
                                         <td>₱{{ number_format($order->total_amount, 2) }}</td>
                                         <td>{{ $order->created_at->format('Y-m-d H:i A') }}</td>
                                         <td>
-                                            <a href="{{ route('order.view', $order->id) }}"
-                                                class="btn btn-primary btn-sm">View</a>
+                                            <div class="d-flex align-items-center gap-1">
+                                                <a href="{{ route('order.view', $order->id) }}"
+                                                    class="btn btn-primary btn-sm">View</a>
+                                                <a href="{{ route('order.received', $order->id) }}"
+                                                    onclick="return confirmReceived(event)" class="btn btn-success btn-sm">Received Order</a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -132,7 +136,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($orders->where('status', 'Accepted') as $key => $order)
+                                @foreach ($orders->where('status', 'Delivered') as $key => $order)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $order->order_number }}</td>
@@ -152,7 +156,7 @@
                                         <td>
                                             <a href="{{ route('order.view', $order->id) }}"
                                                 class="btn btn-primary btn-sm">View</a>
-                                                <a href="#" class="btn btn-warning btn-sm rate-button">Rate</a>
+                                            <a href="#" class="btn btn-warning btn-sm rate-button">Rate</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -208,3 +212,11 @@
         </div>
     </div>
 @endsection
+
+<script>
+    function confirmReceived(event) {
+        if (!confirm('Are you sure you have received this order?')) {
+            event.preventDefault();
+        }
+    }
+</script>

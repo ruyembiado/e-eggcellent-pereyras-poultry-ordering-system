@@ -41,6 +41,15 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Order has been accepted.');
     }
 
+    public function receivedOrder($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = 'Delivered';
+        $order->save();
+
+        return redirect()->back()->with('success', 'Order has been received.');
+    }
+
     public function decline(Request $request)
     {
         $order = Order::findOrFail($request->order_id);

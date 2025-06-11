@@ -55,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
     // Order
     Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
     Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.view');
+    Route::get('/order/received/{id}', [OrderController::class, 'receivedOrder'])->name('order.received');
 
     // Request Order (admin side)
     Route::get('/request-orders', [OrderController::class, 'index'])->name('request.index');
