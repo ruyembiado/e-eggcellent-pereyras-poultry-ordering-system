@@ -10,10 +10,10 @@ class OrderController extends Controller
     public function index()
     {
         if (auth()->user()->user_type == 'admin') {
-            $orders = Order::orderBy('created_at', 'desc')->with('items')->get();
+            $orders = Order::orderBy('created_at', 'desc')->with('items', 'rating')->get();
             return view('admin.request_order', compact('orders'));
         } else {
-            $orders = Order::where('user_id', auth()->id())->orderBy('created_at', 'desc')->with('user')->get();
+            $orders = Order::where('user_id', auth()->id())->orderBy('created_at', 'desc')->with('user', 'rating')->get();
             return view('customer.order', compact('orders'));
         }
     }

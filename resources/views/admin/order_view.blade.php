@@ -39,6 +39,62 @@
                 <p class="m-0"><strong>Comment:</strong> {{ $order->comment ?? '' }}</p>
             </div>
 
+            @php
+                function renderStars($rating)
+                {
+                    $stars = '';
+                    for ($i = 1; $i <= 5; $i++) {
+                        $stars .= $i <= $rating ? '⭐' : ''; 
+                    }
+                    return $stars;
+                }
+            @endphp
+
+            <div class="mb-4">
+                <h4>Order Rating</h4>
+                @if ($order->rating)
+                    <div class="mt-2">
+                        <p class="m-0">
+                            <strong>1. Service Speed Delivery:</strong>
+                            {!! renderStars($order->rating->service_speed) !!}
+                            ({{ $order->rating->service_speed }})
+                        </p>
+                        <p class="m-0">
+                            <strong>2. Quality of Egg Items:</strong>
+                            {!! renderStars($order->rating->egg_quality) !!}
+                            ({{ $order->rating->egg_quality }})
+                        </p>
+                        <p class="m-0">
+                            <strong>3. Accuration of Egg Size:</strong>
+                            {!! renderStars($order->rating->egg_size_accuracy) !!}
+                            ({{ $order->rating->egg_size_accuracy }})
+                        </p>
+
+                        @php
+                            $average = round(
+                                ($order->rating->service_speed +
+                                    $order->rating->egg_quality +
+                                    $order->rating->egg_size_accuracy) /
+                                    3,
+                                1,
+                            );
+                        @endphp
+
+                        <p class="mt-1">
+                            <strong>Average Rating:</strong>
+                            {!! renderStars(round($average)) !!}
+                            ({{ $average }})
+                        </p>
+
+                        @if ($order->rating->comment)
+                            <p class="mt-2"><strong>Comment:</strong> {{ $order->rating->comment }}</p>
+                        @endif
+                    </div>
+                @else
+                    <p class="text-dark">No rating provided yet.</p>
+                @endif
+            </div>
+
             <h4>Order Items</h4>
             <div class="table-responsive">
                 <table class="table table-bordered" width="100%" cellspacing="0">

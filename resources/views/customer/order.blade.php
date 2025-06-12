@@ -110,7 +110,8 @@
                                                 <a href="{{ route('order.view', $order->id) }}"
                                                     class="btn btn-primary btn-sm">View</a>
                                                 <a href="{{ route('order.received', $order->id) }}"
-                                                    onclick="return confirmReceived(event)" class="btn btn-success btn-sm">Received Order</a>
+                                                    onclick="return confirmReceived(event)"
+                                                    class="btn btn-success btn-sm">Received Order</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -157,7 +158,92 @@
                                         <td>
                                             <a href="{{ route('order.view', $order->id) }}"
                                                 class="btn btn-primary btn-sm">View</a>
-                                            <a href="#" class="btn btn-warning btn-sm rate-button">Rate</a>
+                                            @if (@empty($order->rating))
+                                                <a href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#RateModal{{ $order->id }}"
+                                                    class="btn btn-warning btn-sm">Rate</a>
+                                            @endif
+
+                                            <!-- Rate Modal -->
+                                            <div class="modal fade" id="RateModal{{ $order->id }}" tabindex="-1"
+                                                aria-labelledby="RateModalLabel{{ $order->id }}" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <form action="{{ route('rate.store') }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="order_id"
+                                                                value="{{ $order->id }}">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title"
+                                                                    id="RateModalLabel{{ $order->id }}">Rate for
+                                                                    {{ $order->order_number }}</h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                {{-- 1. Service Speed Delivery --}}
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">1. Service Speed
+                                                                        Delivery:</label>
+                                                                    <select name="criteria[service_speed]"
+                                                                        class="form-select" required>
+                                                                        <option value="">Select rating</option>
+                                                                        @for ($i = 5; $i >= 1; $i--)
+                                                                            <option value="{{ $i }}">
+                                                                                {{ $i }} -
+                                                                                {{ str_repeat('⭐', $i) }}
+                                                                            </option>
+                                                                        @endfor
+                                                                    </select>
+                                                                </div>
+
+                                                                {{-- 2. Quality of Egg Items --}}
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">2. Quality of Egg
+                                                                        Items:</label>
+                                                                    <select name="criteria[egg_quality]"
+                                                                        class="form-select" required>
+                                                                        <option value="">Select rating</option>
+                                                                        @for ($i = 5; $i >= 1; $i--)
+                                                                            <option value="{{ $i }}">
+                                                                                {{ $i }} -
+                                                                                {{ str_repeat('⭐', $i) }}
+                                                                            </option>
+                                                                        @endfor
+                                                                    </select>
+                                                                </div>
+
+                                                                {{-- 3. Accuration of Egg Size --}}
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">3. Accuration of Egg
+                                                                        Size:</label>
+                                                                    <select name="criteria[egg_size_accuracy]"
+                                                                        class="form-select" required>
+                                                                        <option value="">Select rating</option>
+                                                                        @for ($i = 5; $i >= 1; $i--)
+                                                                            <option value="{{ $i }}">
+                                                                                {{ $i }} -
+                                                                                {{ str_repeat('⭐', $i) }}
+                                                                            </option>
+                                                                        @endfor
+                                                                    </select>
+                                                                </div>
+
+                                                                {{-- Optional Comment --}}
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Comment (optional):</label>
+                                                                    <textarea name="comment" class="form-control" rows="3" placeholder="Write your feedback..."></textarea>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger"
+                                                                    data-bs-dismiss="modal">Cancel</button>
+                                                                <button type="submit" class="btn btn-warning">Submit
+                                                                    Rating</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

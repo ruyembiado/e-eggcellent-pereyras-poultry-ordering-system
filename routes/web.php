@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,11 +62,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/request-orders', [OrderController::class, 'index'])->name('request.index');
     Route::post('/request-order/accept', [OrderController::class, 'accept'])->name('order.accept');
     Route::post('/request-order/decline', [OrderController::class, 'decline'])->name('order.decline');
-    
+
     // Report
     Route::get('/reports', [ReportController::class, 'index'])->name('report.index');
     Route::get('/report/daily', [ReportController::class, 'dailyReport'])->name('daily.report');
     Route::get('/reports/weekly', [ReportController::class, 'weeklyReport'])->name('weekly.report');
     Route::get('/reports/monthly', [ReportController::class, 'monthlyReport'])->name('monthly.report');
     Route::get('/reports/yearly', [ReportController::class, 'yearlyReport'])->name('yearly.report');
+
+    // Rate
+    Route::post('/rate-order', [RatingController::class, 'store'])->name('rate.store');
 });
