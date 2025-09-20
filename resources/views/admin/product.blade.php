@@ -16,6 +16,7 @@
                             <th>No.</th>
                             <th>Product Image</th>
                             <th>Product Name & Size</th>
+                            <th>Stock Qty.</th>
                             <th>Price</th>
                             <th>Status</th>
                             <th>Date Created</th>
@@ -31,13 +32,14 @@
                                         alt="Product Image" class="img-fluid" width="70">
                                 </td>
                                 <td>{{ $product->product_name }}</td>
+                                <td>{{ $product->quantity }}</td>
                                 <td>₱{{ number_format($product->product_price, 2) }}</td>
                                 <td>
                                     <span class="badge {{ $product->status == 'Available' ? 'bg-success' : 'bg-danger' }}">
                                         {{ $product->status }}
                                     </span>
                                 </td>
-                                <td>{{ $product->created_at->format('Y-m-d H:i:s a') }}</td>
+                                <td>{{ $product->created_at->format('Y-m-d h:i a') }}</td>
                                 <td>
                                     <a href="{{ route('product.edit', $product->id) }}"
                                         class="btn btn-warning btn-sm">Edit</a>

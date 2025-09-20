@@ -19,11 +19,11 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                         Orders | Today</div>
+                                </div>
+                                <div class="mb-0 font-weight-bold d-flex align-items-center gap-3">
                                     <div class="col-auto">
                                         <i class="fa fa-shopping-cart fa-2x text-dark"></i>
                                     </div>
-                                </div>
-                                <div class="mb-0 font-weight-bold">
                                     <p style="font-size: 70px">{{ $ordersToday }}</p>
                                 </div>
                             </div>
@@ -43,11 +43,11 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                         Orders | This Week</div>
+                                </div>
+                                <div class="mb-0 font-weight-bold d-flex align-items-center gap-3">
                                     <div class="col-auto">
                                         <i class="fa fa-shopping-cart fa-2x text-dark"></i>
                                     </div>
-                                </div>
-                                <div class="mb-0 font-weight-bold">
                                     <p style="font-size: 70px">{{ $ordersThisWeek }}</p>
                                 </div>
                             </div>
@@ -66,11 +66,11 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                         Orders | This Month</div>
+                                </div>
+                                <div class="mb-0 font-weight-bold d-flex align-items-center gap-3">
                                     <div class="col-auto">
                                         <i class="fa fa-shopping-cart fa-2x text-dark"></i>
                                     </div>
-                                </div>
-                                <div class="mb-0 font-weight-bold">
                                     <p style="font-size: 70px">{{ $ordersThisMonth }}</p>
                                 </div>
                             </div>
@@ -89,11 +89,11 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                         Orders | This Year</div>
+                                </div>
+                                <div class="mb-0 font-weight-bold d-flex align-items-center gap-3">
                                     <div class="col-auto">
                                         <i class="fa fa-shopping-cart fa-2x text-dark"></i>
                                     </div>
-                                </div>
-                                <div class="mb-0 font-weight-bold">
                                     <p style="font-size: 70px">{{ $ordersThisYear }}</p>
                                 </div>
                             </div>

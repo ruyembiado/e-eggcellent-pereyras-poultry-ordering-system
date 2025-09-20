@@ -149,7 +149,7 @@
             </main>
             <footer class="footer py-3 shadow text-center">
                 <div class="d-flex justify-content-between px-3">
-                    <div class="">© 2025 e-Eggcellent. All rights reserved.</div>
+                    <div class="">© 2025 e-Eggcellent. All Rights Reserved.</div>
                 </div>
             </footer>
         </div>

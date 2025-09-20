@@ -17,5 +17,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/public/img/products/*
-!/public/img/products/.gitkeep
+/public/img/product_uploads/*
+!/public/img/product_uploads/.gitkeep

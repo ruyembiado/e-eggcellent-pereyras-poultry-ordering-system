@@ -16,7 +16,7 @@ class AuthController extends Controller
 
         if (auth()->check()) {
             $user = auth()->user();
-            if ($user->user_type == 'admin') {
+            if ($user->user_type == 'admin' || $user->user_type == 'customer') {
                 return redirect('/dashboard');
             }
         }

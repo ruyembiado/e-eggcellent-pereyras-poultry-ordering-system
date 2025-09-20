@@ -41,56 +41,6 @@
         </div>
     </main>
 
-    <!-- Offcanvas for the Login Form -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="loginOffcanvas" aria-labelledby="loginOffcanvasLabel">
-        <div class="offcanvas-body">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="loginOffcanvasLabel">Login</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-logo text-center">
-                <img src="{{ asset('img/eggcellent-logo.webp') }}"
-                    alt="eggcellent-logo" class="img-fluid" width="200">
-            </div>
-            @if ($errors->any())
-                <div class="alert alert-danger" role="alert">
-                    @foreach ($errors->all() as $error)
-                        <div>{{ $error }}</div>
-                    @endforeach
-                </div>
-            @endif
-            <form action="{{ route('login') }}" method="post">
-                @csrf
-
-                <div class="mb-2">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                        name="email" value="{{ old('email') }}" required>
-                    @error('email')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-2">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                        name="password" required>
-                    @error('password')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-2">
-                    <a href="#" class="text-dark"><i>Forgot Password?</i></a>
-                </div>
-
-                <div class="mt-2">
-                    <button type="submit" class="btn btn-warning">Login</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Offcanvas for the Register Form -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="registerOffcanvas" aria-labelledby="registerOffcanvasLabel">
         <div class="offcanvas-body">
@@ -99,8 +49,7 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-logo text-center">
-                <img src="{{ asset('img/eggcellent-logo.webp') }}"
-                    alt="eggcellent-logo" class="img-fluid" width="200">
+                <img src="{{ asset('img/eggcellent-logo.webp') }}" alt="eggcellent-logo" class="img-fluid" width="200">
             </div>
             @if ($errors->any())
                 <div class="alert alert-danger" role="alert">

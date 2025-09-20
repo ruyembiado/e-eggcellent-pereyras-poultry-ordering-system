@@ -7,10 +7,16 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->user()->user_type == 'admin') {
-            $orders = Order::orderBy('created_at', 'desc')->with('items', 'rating')->get();
+            $orders = Order::when($request->filled('status') && $request->status !== 'All', function ($query) use ($request) {
+                return $query->where('status', $request->status);
+            })
+                ->orderBy('created_at', 'desc')
+                ->with('items', 'rating')
+                ->get();
+
             return view('admin.request_order', compact('orders'));
         } else {
             $orders = Order::where('user_id', auth()->id())->orderBy('created_at', 'desc')->with('user', 'rating')->get();

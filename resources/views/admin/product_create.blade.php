@@ -29,6 +29,17 @@
                     @enderror
                 </div>
                 <div class="col-12 mb-2">
+                    <label for="quantity" class="form-label">Stock Qty.</label>
+                    <div class="col-2">
+                        <input type="number" name="quantity"
+                            class="form-control @error('quantity') is-invalid @enderror" id="quantity"
+                            value="{{ old('quantity') }}">
+                    </div>
+                    @error('quantity')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="col-12 mb-2">
                     <label for="product_price" class="form-label">Product Price</label>
                     <input type="text" name="product_price" placeholder="Enter product price"
                         class="form-control @error('product_price') is-invalid @enderror" id="product_price"
@@ -39,7 +50,8 @@
                 </div>
                 <div class="col-12 mb-2">
                     <label for="status" class="form-label">Status</label>
-                    <select name="status" id="status" class="form-select @error('status') is-invalid @enderror" required>
+                    <select name="status" id="status" class="form-select @error('status') is-invalid @enderror"
+                        required>
                         <option value="">-- Select Status --</option>
                         <option value="Available" {{ old('status') == 'Available' ? 'selected' : '' }}>Available</option>
                         <option value="Out of Stock" {{ old('status') == 'Out of Stock' ? 'selected' : '' }}>Out of Stock

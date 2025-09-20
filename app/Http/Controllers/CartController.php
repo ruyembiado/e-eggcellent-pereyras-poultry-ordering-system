@@ -70,6 +70,8 @@ class CartController extends Controller
             'total_amount' => $totalAmount,
             'shipping_address' => $request->shipping_address,
             'type_of_service' => $request->type_of_service,
+            'pick_up_datetime' => $request->pick_up_datetime ?? null,
+            'delivery_notes' => $request->delivery_notes ?? null,
             'status' => 'Pending',
         ]);
 
@@ -81,6 +83,15 @@ class CartController extends Controller
                 'quantity' => $item->quantity,
                 'subtotal' => $item->product->product_price * $item->quantity,
             ]);
+
+            $product = Product::find($item->product_id);
+            if ($product) {
+                // Calculate new stock
+                $newStock = $product->quantity - $item->quantity;
+                // Prevent negative stock
+                $product->quantity = max(0, $newStock);
+                $product->save();
+            }
         }
 
         Cart::where('user_id', auth()->id())->delete();

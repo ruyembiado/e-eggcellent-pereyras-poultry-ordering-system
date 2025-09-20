@@ -8,6 +8,11 @@
     padding: 0;
 }
 
+main.content {
+    min-height: fit-content;
+    height: 100vh;
+}
+
 a {
     text-decoration: none;
 }
@@ -103,7 +108,7 @@ a.sidebar-link {
     padding: 10px 26px;
     color: #FFF;
     display: block;
-    font-size: 14px;
+    font-size: 18px;
     white-space: nowrap;
     border-left: 3px solid transparent;
 }

@@ -25,9 +25,18 @@
                     </span>
                 </p>
                 <p class="m-0"><strong>Order Number:</strong> {{ $order->order_number }}</p>
-                <p class="m-0"><strong>Order Date:</strong> {{ $order->created_at->format('Y-m-d H:i A') }}</p>
-                <p class="m-0"><strong>Delivery Schedule:</strong> {{ $order->delivery_date ?? '' }}</p>
+                <p class="m-0"><strong>Order Date:</strong> {{ $order->created_at->format('F d, Y h:i A') }}</p>
                 <p class="m-0"><strong>Type of Service:</strong> {{ $order->type_of_service ?? '' }}</p>
+                @if ($order->type_of_service == 'Pick-up')
+                    <p class="m-0">
+                        <strong>Pick-Up Date & Time:</strong>
+                        {{ $order->pick_up_datetime ? \Carbon\Carbon::parse($order->pick_up_datetime)->format('F d, Y h:i A') : '' }}
+                    </p>
+                @endif
+                @if ($order->type_of_service == 'Delivery')
+                    <p class="m-0"><strong>Delivery Schedule:</strong> {{ $order->delivery_date ?? '' }}</p>
+                    <p class="m-0"><strong>Additional Delivery Instructions / Landmark:</strong> {{ $order->delivery_notes ?? '' }}</p>
+                @endif
                 <p class="m-0"><strong>Comment:</strong> {{ $order->comment ?? '' }}</p>
             </div>
 
@@ -36,7 +45,7 @@
                 {
                     $stars = '';
                     for ($i = 1; $i <= 5; $i++) {
-                        $stars .= $i <= $rating ? '⭐' : ''; 
+                        $stars .= $i <= $rating ? '⭐' : '';
                     }
                     return $stars;
                 }

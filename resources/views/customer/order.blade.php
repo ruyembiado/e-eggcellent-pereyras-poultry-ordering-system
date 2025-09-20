@@ -229,8 +229,8 @@
 
                                                                 {{-- Optional Comment --}}
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Comment (optional):</label>
-                                                                    <textarea name="comment" class="form-control" rows="3" placeholder="Write your feedback..."></textarea>
+                                                                    <label class="form-label">Comment:</label>
+                                                                    <textarea name="comment" class="form-control" required rows="3" placeholder="Write your feedback..."></textarea>
                                                                 </div>
 
                                                             </div>

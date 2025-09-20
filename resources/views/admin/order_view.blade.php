@@ -12,10 +12,15 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h4>Order Details</h4>
                     @if ($order->status == 'Pending')
-                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#confirmRequestModal">
-                            Accept Order Request
-                        </button>
+                        @if ($order->type_of_service == 'Delivery')
+                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#confirmRequestModal">
+                                Accept Order Request
+                            </button>
+                        @else
+                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#confirmPickUpRequestModal">Accept Order Request</button>
+                        @endif
                     @endif
                 </div>
                 <p class="m-0"><strong>Name:</strong> {{ $order->user->name ?? 'N/A' }}</p>
@@ -33,9 +38,19 @@
                     </span>
                 </p>
                 <p class="m-0"><strong>Order Number:</strong> {{ $order->order_number }}</p>
-                <p class="m-0"><strong>Order Date:</strong> {{ $order->created_at->format('Y-m-d H:i A') }}</p>
-                <p class="m-0"><strong>Delivery Schedule:</strong> {{ $order->delivery_date ?? '' }}</p>
+                <p class="m-0"><strong>Order Date:</strong> {{ $order->created_at->format('Y-m-d h:i A') }}</p>
                 <p class="m-0"><strong>Type of Service:</strong> {{ $order->type_of_service ?? '' }}</p>
+                @if ($order->type_of_service == 'Pick-up')
+                    <p class="m-0">
+                        <strong>Pick-Up Date & Time:</strong>
+                        {{ $order->pick_up_datetime ? \Carbon\Carbon::parse($order->pick_up_datetime)->format('F d, Y h:i A') : '' }}
+                    </p>
+                @endif
+                @if ($order->type_of_service == 'Delivery')
+                    <p class="m-0"><strong>Delivery Schedule:</strong> {{ $order->delivery_date ?? '' }}</p>
+                    <p class="m-0"><strong>Additional Delivery Instructions / Landmark:</strong>
+                        {{ $order->delivery_notes ?? '' }}</p>
+                @endif
                 <p class="m-0"><strong>Comment:</strong> {{ $order->comment ?? '' }}</p>
             </div>
 
@@ -44,7 +59,7 @@
                 {
                     $stars = '';
                     for ($i = 1; $i <= 5; $i++) {
-                        $stars .= $i <= $rating ? '⭐' : ''; 
+                        $stars .= $i <= $rating ? '⭐' : '';
                     }
                     return $stars;
                 }
@@ -116,8 +131,8 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>
-                                    <img src="{{ asset($item->product->product_image ?? 'img/default-egg.jpg') }}" alt="Product Image"
-                                        class="img-fluid" width="70">
+                                    <img src="{{ asset($item->product->product_image ?? 'img/default-egg.jpg') }}"
+                                        alt="Product Image" class="img-fluid" width="70">
                                 </td>
                                 <td>{{ $item->product->product_name }}</td>
                                 <td>₱{{ number_format($item->price, 2) }}</td>
@@ -128,7 +143,9 @@
                     </tbody>
                 </table>
                 <div class="total-amount text-end">
-                    <strong><p>Total Amount: ₱{{ number_format($order->total_amount, 2) }}</p></strong>
+                    <strong>
+                        <p>Total Amount: ₱{{ number_format($order->total_amount, 2) }}</p>
+                    </strong>
                 </div>
             </div>
         </div>
@@ -152,6 +169,33 @@
                             <input type="date" class="form-control" id="delivery_date" name="delivery_date"
                                 rows="2" required />
                         </div>
+                        <div class="col-12 mb-3">
+                            <label for="comment" class="form-label">Comment <i>(optional)</i></label>
+                            <textarea name="comment" id="comment" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Confirm Order Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pick-up Confirmation Modal -->
+    <div class="modal fade" id="confirmPickUpRequestModal" tabindex="-1" aria-labelledby="confirmPickUpRequestModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form action="{{ route('order.accept') }}" method="POST" class="modal-content">
+                @csrf
+                <input type="hidden" name="order_id" value="{{ $order->id }}">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmPickUpRequestModalLabel">Pick-up Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
                         <div class="col-12 mb-3">
                             <label for="comment" class="form-label">Comment <i>(optional)</i></label>
                             <textarea name="comment" id="comment" class="form-control" rows="3"></textarea>

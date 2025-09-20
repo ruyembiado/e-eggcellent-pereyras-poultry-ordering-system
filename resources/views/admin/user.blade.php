@@ -8,6 +8,8 @@
 
     <div class="card shadow mb-4">
         <div class="card-body">
+
+            
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
                     <thead>
@@ -37,7 +39,7 @@
                                         {{ ucfirst($user->status) }}
                                     </span>
                                 </td>
-                                <td>{{ $user->created_at->format('Y-m-d H:i:s a') }}</td>
+                                <td>{{ $user->created_at->format('Y-m-d h:i a') }}</td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         {{-- <a href="" class="btn btn-warning btn-sm">Edit</a>

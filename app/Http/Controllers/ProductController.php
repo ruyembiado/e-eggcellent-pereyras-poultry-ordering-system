@@ -24,6 +24,7 @@ class ProductController extends Controller
             'product_name' => 'required|string|max:255',
             'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'product_price' => 'required|numeric',
+            'quantity' => 'nullable|integer|min:0',
             'status' => 'required',
         ]);
 
@@ -31,14 +32,15 @@ class ProductController extends Controller
 
         if ($request->hasFile('product_image')) {
             $imageName = time() . '.' . $request->product_image->extension();
-            $request->file('product_image')->move(public_path('img/products'), $imageName);
-            $imagePath = 'img/products/' . $imageName;
+            $request->file('product_image')->move(public_path('img/product_uploads'), $imageName);
+            $imagePath = 'img/product_uploads/' . $imageName;
         }
 
         Product::create([
             'product_name' => $request->product_name,
             'product_image' => $imagePath,
             'product_price' => number_format((float) $request->product_price, 2, '.', ''),
+            'quantity' => $request->quantity ?? 0,
             'status' => $request->status,
         ]);
 
@@ -57,6 +59,7 @@ class ProductController extends Controller
             'product_name' => 'required|string|max:255',
             'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'product_price' => 'required|numeric',
+            'quantity' => 'nullable|integer|min:0',
             'status' => 'required|string',
         ]);
 
@@ -71,14 +74,15 @@ class ProductController extends Controller
 
             $image = $request->file('product_image');
             $imageName = time() . '.' . $image->extension();
-            $image->move(public_path('img/products'), $imageName);
+            $image->move(public_path('img/product_uploads'), $imageName);
 
-            $product->product_image = 'img/products/' . $imageName;
+            $product->product_image = 'img/product_uploads/' . $imageName;
         }
 
         $product->update([
             'product_name' => $request->product_name,
             'product_price' => number_format((float) $request->product_price, 2, '.', ''),
+            'quantity' => $request->quantity ?? 0,
             'status' => $request->status,
         ]);
 

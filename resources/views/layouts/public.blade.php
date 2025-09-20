@@ -41,14 +41,22 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
                         <ul class="navbar-nav gap-3 align-items-center">
                             <li class="nav-item">
-                                <a class="nav-link text-light" href="/">Home</a>
+                                <a class="nav-link text-light" href="/"><i class="fa fa-home"></i> Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" href="/contact-us">Contact Us</a>
+                                <a class="nav-link text-light" href="/contact-us"><i class="fa fa-phone"></i> Contact
+                                    Us</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" href="/shop">Shop</a>
+                                <a class="nav-link text-light" href="/shop"><i class="fa fa-shop"></i> Shop</a>
                             </li>
+
+                            @if (!auth()->check())
+                                <button class="btn btn-light" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#loginOffcanvas" aria-controls="loginOffcanvas">
+                                    <i class="fa fa-user-circle"></i> Admin
+                                </button>
+                            @endif
 
                             @if (auth()->check() && auth()->user()->user_type == 'customer')
                                 <li class="nav-item">
@@ -57,7 +65,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" href="/dashboard">Dashboard</a>
+                                    <a class="nav-link text-light" href="/dashboard">
+                                        <i class="fa-solid fa-dashboard"></i> Dashboard</a>
                                 </li>
 
                                 <li class="nav-item dropdown">
@@ -81,9 +90,75 @@
 
             @yield('content')
 
+            <!-- Offcanvas for the Login Form -->
+            <div class="offcanvas offcanvas-end bg-dark bg-gradient" tabindex="-1" id="loginOffcanvas"
+                aria-labelledby="loginOffcanvasLabel">
+                <div class="offcanvas-body">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title text-light" id="loginOffcanvasLabel">Admin Login</h5>
+                        <button type="button" class="btn-close text-reset bg-light " data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-logo text-center">
+                        <img src="{{ asset('img/eggcellent-logo.webp') }}" alt="eggcellent-logo" class="img-fluid"
+                            width="200">
+                    </div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger" role="alert">
+                            @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
+                        </div>
+                    @endif
+                    <form action="{{ route('login') }}" method="post">
+                        @csrf
+
+                        <div class="mb-2">
+                            <label for="email" class="form-label text-light">Email</label>
+                            <div class="input-group w-100">
+                                <div class="input-group-prepend bg-light rounded-start d-flex align-items-center">
+                                    <span class="input-group-text border-0" id="basic-addon1"><i
+                                            class="fa fa-envelope bg-transparent"></i></span>
+                                </div>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                    aria-describedby="basic-addon1" id="email" name="email"
+                                    value="{{ old('email') }}" required>
+                            </div>
+                            @error('email')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="password" class="form-label text-light">Password</label>
+                            <div class="input-group d-flex w-100">
+                                <div class="input-group-prepend bg-light rounded d-flex align-items-center w-100">
+                                    <span class="input-group-text border-0" id="basic-addon2"><i
+                                            class="fa fa-lock bg-transparent"></i></span>
+                                    <input type="password" style="border-radius: 0 6px 6px 0;"
+                                        class="form-control @error('password') is-invalid @enderror" id="password"
+                                        aria-describedby="basic-addon2" name="password" required>
+                                </div>
+                            </div>
+                            @error('password')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-2">
+                            <a href="#" class="text-light"><i>Forgot Password?</i></a>
+                        </div>
+
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-warning">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <footer class="footer py-2 shadow text-center bg-dark text-light">
                 <div class="m-auto">
-                    <div class="">© 2025 e-Eggcellent. All rights reserved.</div>
+                    <div class="">© 2025 e-Eggcellent. All Rights Reserved.</div>
                 </div>
             </footer>
         </div>
