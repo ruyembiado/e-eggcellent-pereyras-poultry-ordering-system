@@ -24,7 +24,7 @@ class ReportController extends Controller
             ->get();
 
         $report = $orders->groupBy('user_id')->map(function ($userOrders) {
-            $customerName = $userOrders->first()->user->name;
+            $customerName = $userOrders->first()->user->user_type == 'admin' ? ' Walk-in' : $userOrders->first()->user->name;
 
             $products = [];
             $totalQuantity = 0;

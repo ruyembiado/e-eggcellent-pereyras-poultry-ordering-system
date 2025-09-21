@@ -31,42 +31,42 @@
         <aside id="sidebar" class="bg-theme-primary expand">
             <div class="d-flex gap-1 justify-content-center pt-4">
                 <div class="site-log">
-                    <a href="/dashboard">
+                    <a href="{{ url('/dashboard') }}">
                         <img src="{{ asset('img/eggcellent-logo.webp') }}" width="70" alt="pereyras-logo">
                     </a>
                 </div>
                 <div class="sidebar-logo">
-                    <a href="/dashboard">E-EGGCELLENT</a>
+                    <a href="{{ url('/dashboard') }}">E-EGGCELLENT</a>
                 </div>
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="/dashboard" class="sidebar-link">
+                    <a href="{{ url('/dashboard') }}" class="sidebar-link">
                         <i class="fa fa-home"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 @if (auth()->user()->user_type == 'admin')
                     <li class="sidebar-item">
-                        <a href="/products/all" class="sidebar-link">
+                        <a href="{{ url('/products/all') }}" class="sidebar-link">
                             <i class="fa-solid fa-egg"></i>
                             <span>Products</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="/request-orders" class="sidebar-link">
+                        <a href="{{ url('/request-orders') }}" class="sidebar-link">
                             <i class="fa-regular fa-pen-to-square"></i>
                             <span>Request Orders</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="/users" class="sidebar-link">
+                        <a href="{{ url('/users') }}" class="sidebar-link">
                             <i class="fa fa-users"></i>
                             <span>Users</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="/reports" class="sidebar-link">
+                        <a href="{{ url('/reports') }}" class="sidebar-link">
                             <i class="fa-regular fa-rectangle-list"></i>
                             <span>Reports</span>
                         </a>
@@ -74,19 +74,19 @@
                 @endif
                 @if (auth()->user()->user_type == 'customer')
                     <li class="sidebar-item">
-                        <a href="/shop" class="sidebar-link">
+                        <a href="{{ url('/shop') }}" class="sidebar-link">
                             <i class="fa-solid fa-egg"></i>
                             <span>Products</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="/cart" class="sidebar-link">
+                        <a href="{{ url('/cart') }}" class="sidebar-link">
                             <i class="fa-solid fa-cart-shopping"></i>
                             <span>Cart</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="/orders" class="sidebar-link">
+                        <a href="{{ url('/orders') }}" class="sidebar-link">
                             <i class="fa-solid fa-file-invoice"></i>
                             <span>Orders</span>
                         </a>
@@ -186,7 +186,6 @@
     <script src="{{ asset('js/script.js') }}"></script>
     <script>
         function hideAlerts(delay = 3000) {
-            console.log('Hiding alerts');
             if ($('.alert-success, .alert-danger').length) {
                 setTimeout(function() {
                     $('.alert-success, .alert-danger').fadeOut('slow');

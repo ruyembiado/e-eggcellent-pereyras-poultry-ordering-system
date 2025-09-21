@@ -4,6 +4,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0">Request Orders</h1>
+        <a href="{{ route('order.walkin') }}" class="btn btn-primary">Add Walk-in Order</a>
     </div>
 
     <div class="card shadow mb-4">
@@ -49,7 +50,8 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $order->order_number }}</td>
-                                <td>{{ $order->user->name ?? 'Walk-in' }}</td>
+                                <td>
+                                    {{ $order->user->user_type == 'admin' ? 'Walk-in' : $order->user->name }}</td>
                                 <td>
                                     <span
                                         class="badge 

@@ -27,6 +27,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/shop', [ShopController::class, 'index']);
 Route::get('/contact-us', [AuthController::class, 'contact']);
+Route::get('/login-auth', [AuthController::class, 'loginPage'])->name('login.page');
+Route::get('/register-auth', [AuthController::class, 'registerPage'])->name('register.page');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [AuthController::class, 'dashboard']);
@@ -57,6 +59,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
     Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.view');
     Route::get('/order/received/{id}', [OrderController::class, 'receivedOrder'])->name('order.received');
+    Route::get('/create-order', [OrderController::class, 'showWalkInOrderForm'])->name('order.walkin');
+    Route::post('/create-order', [OrderController::class, 'createWalkInOrder'])->name('order.walkin.store');
 
     // Request Order (admin side)
     Route::get('/request-orders', [OrderController::class, 'index'])->name('request.index');

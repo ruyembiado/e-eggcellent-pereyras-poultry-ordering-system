@@ -3,10 +3,65 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+
+    public function showWalkInOrderForm()
+    {
+        $products = Product::all();
+        return view('admin.order_create', compact('products'));
+    }
+
+    public function createWalkInOrder(Request $request)
+    {
+        $cartItems = [];
+        foreach ($request->product_id as $index => $productId) {
+            $product = Product::find($productId);
+            if ($product) {
+                $cartItems[] = (object)[
+                    'product_id' => $product->id,
+                    'quantity' => $request->quantity[$index],
+                    'product' => $product,
+                ];
+            }
+        }
+
+        $order = Order::create([
+            'user_id' => auth()->user()->id,
+            'order_number' => 'EGG-' . strtoupper(uniqid()),
+            'total_amount' => $request->total_amount,
+            'shipping_address' => 'Walk-in',
+            'type_of_service' =>  'Walk-in',
+            'delivery_notes' => null,
+            'status' => 'Delivered',
+        ]);
+
+        foreach ($cartItems as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'price' => $item->product->product_price,
+                'quantity' => $item->quantity,
+                'subtotal' => $item->product->product_price * $item->quantity,
+            ]);
+
+            $product = Product::find($item->product_id);
+            if ($product) {
+                // Calculate new stock
+                $newStock = $product->quantity - $item->quantity;
+                // Prevent negative stock
+                $product->quantity = max(0, $newStock);
+                $product->save();
+            }
+        }
+
+        return redirect()->route('order.index')->with('success', 'Walk-in order created successfully.');
+    }
+
     public function index(Request $request)
     {
         if (auth()->user()->user_type == 'admin') {

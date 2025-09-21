@@ -46,7 +46,7 @@ class AuthController extends Controller
 
         return back()
             ->withErrors(['error' => 'The provided credentials do not match our records.'])
-            ->withInput($request->only('email'));
+            ->withInput($request->only('email', 'admin_login'));
     }
 
     public function register(Request $request)
@@ -168,5 +168,15 @@ class AuthController extends Controller
     {
         auth()->logout();
         return redirect('/')->with('success', 'Logout successful');
+    }
+
+    public function loginPage()
+    {
+        return view('login');
+    }
+
+    public function RegisterPage()
+    {
+        return view('register');
     }
 }

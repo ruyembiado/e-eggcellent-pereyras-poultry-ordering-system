@@ -1,157 +1,197 @@
-@extends('layouts.auth') <!-- Extend the main layout -->
+@extends('layouts.auth')
 
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0">View Order - #{{ $order->order_number }}</h1>
+        <h1 class="h3 mb-0">Order #{{ $order->order_number }}</h1>
+        @if ($order->status == 'Pending')
+            @if ($order->type_of_service == 'Delivery')
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmRequestModal">
+                    Accept Order Request
+                </button>
+            @else
+                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#confirmPickUpRequestModal">
+                    Accept Order Request
+                </button>
+            @endif
+        @endif
     </div>
 
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <div class="mb-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h4>Order Details</h4>
-                    @if ($order->status == 'Pending')
-                        @if ($order->type_of_service == 'Delivery')
-                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#confirmRequestModal">
-                                Accept Order Request
-                            </button>
-                        @else
-                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#confirmPickUpRequestModal">Accept Order Request</button>
-                        @endif
-                    @endif
-                </div>
-                <p class="m-0"><strong>Name:</strong> {{ $order->user->name ?? 'N/A' }}</p>
-                <p class="m-0"><strong>Contact Number:</strong> {{ $order->user->phone_number ?? 'N/A' }}</p>
-                <p class="m-0"><strong>Delivery Address:</strong> {{ $order->shipping_address }}</p>
-                <p class="m-0"><strong>Status:</strong>
-                    <span
-                        class="badge 
-                        @if ($order->status == 'Pending') bg-warning
-                        @elseif($order->status == 'Done') bg-success
-                        @elseif($order->status == 'Accepted') bg-success
-                        @elseif($order->status == 'Delivered') bg-success
-                        @elseif($order->status == 'Cancelled') bg-danger @endif">
-                        {{ $order->status }}
-                    </span>
-                </p>
-                <p class="m-0"><strong>Order Number:</strong> {{ $order->order_number }}</p>
-                <p class="m-0"><strong>Order Date:</strong> {{ $order->created_at->format('Y-m-d h:i A') }}</p>
-                <p class="m-0"><strong>Type of Service:</strong> {{ $order->type_of_service ?? '' }}</p>
-                @if ($order->type_of_service == 'Pick-up')
-                    <p class="m-0">
-                        <strong>Pick-Up Date & Time:</strong>
-                        {{ $order->pick_up_datetime ? \Carbon\Carbon::parse($order->pick_up_datetime)->format('F d, Y h:i A') : '' }}
-                    </p>
-                @endif
-                @if ($order->type_of_service == 'Delivery')
-                    <p class="m-0"><strong>Delivery Schedule:</strong> {{ $order->delivery_date ?? '' }}</p>
-                    <p class="m-0"><strong>Additional Delivery Instructions / Landmark:</strong>
-                        {{ $order->delivery_notes ?? '' }}</p>
-                @endif
-                <p class="m-0"><strong>Comment:</strong> {{ $order->comment ?? '' }}</p>
-            </div>
-
-            @php
-                function renderStars($rating)
-                {
-                    $stars = '';
-                    for ($i = 1; $i <= 5; $i++) {
-                        $stars .= $i <= $rating ? '⭐' : '';
-                    }
-                    return $stars;
-                }
-            @endphp
-
-            <div class="mb-4">
-                <h4>Order Rating</h4>
-                @if ($order->rating)
-                    <div class="mt-2">
-                        <p class="m-0">
-                            <strong>1. Service Speed Delivery:</strong>
-                            {!! renderStars($order->rating->service_speed) !!}
-                            ({{ $order->rating->service_speed }})
-                        </p>
-                        <p class="m-0">
-                            <strong>2. Quality of Egg Items:</strong>
-                            {!! renderStars($order->rating->egg_quality) !!}
-                            ({{ $order->rating->egg_quality }})
-                        </p>
-                        <p class="m-0">
-                            <strong>3. Accuration of Egg Size:</strong>
-                            {!! renderStars($order->rating->egg_size_accuracy) !!}
-                            ({{ $order->rating->egg_size_accuracy }})
-                        </p>
-
+    <!-- Order Progress -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3"><i class="fa fa-list-alt text-dark me-2"></i></i> Order Status</h5>
+                    <div class="d-flex justify-content-between align-items-center my-4 position-relative">
                         @php
-                            $average = round(
-                                ($order->rating->service_speed +
-                                    $order->rating->egg_quality +
-                                    $order->rating->egg_size_accuracy) /
-                                    3,
-                                1,
-                            );
+                            $steps = [
+                                'Pending' => 'clock',
+                                'Accepted' => 'box',
+                                'Delivered' => 'check-circle',
+                            ];
+                            $currentStatus = $order->status;
+                            $statuses = array_keys($steps);
+                            $currentIndex = array_search($currentStatus, $statuses);
                         @endphp
 
-                        <p class="mt-1">
-                            <strong>Average Rating:</strong>
-                            {!! renderStars(round($average)) !!}
-                            ({{ $average }})
-                        </p>
+                        @foreach ($steps as $label => $icon)
+                            <div class="text-center flex-fill position-relative">
+                                <!-- Circle -->
+                                <div
+                                    class="rounded-circle step-icon 
+                        @if ($loop->index <= $currentIndex) bg-success text-white 
+                        @else bg-light text-dark border @endif
+                        d-flex align-items-center justify-content-center mx-auto">
+                                    <i class="fa fa-{{ $icon }}"></i>
+                                </div>
 
-                        @if ($order->rating->comment)
-                            <p class="mt-2"><strong>Comment:</strong> {{ $order->rating->comment }}</p>
-                        @endif
-                    </div>
-                @else
-                    <p class="text-dark">No rating provided yet.</p>
-                @endif
-            </div>
+                                <!-- Label -->
+                                <small
+                                    class="d-block mt-2 {{ $loop->index <= $currentIndex ? 'fw-bold text-success' : 'text-muted' }}">
+                                    {{ $label }}
+                                </small>
 
-            <h4>Order Items</h4>
-            <div class="table-responsive">
-                <table class="table table-bordered" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Product Image</th>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($order->items as $key => $item)
-                            @php
-                                $subtotal = $item->price * $item->quantity;
-                            @endphp
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>
-                                    <img src="{{ asset($item->product->product_image ?? 'img/default-egg.jpg') }}"
-                                        alt="Product Image" class="img-fluid" width="70">
-                                </td>
-                                <td>{{ $item->product->product_name }}</td>
-                                <td>₱{{ number_format($item->price, 2) }}</td>
-                                <td>{{ $item->quantity }}</td>
-                                <td>₱{{ number_format($subtotal, 2) }}</td>
-                            </tr>
+                                <!-- Connector -->
+                                @if (!$loop->last)
+                                    <div
+                                        class="step-connector 
+                            @if ($loop->index < $currentIndex) bg-success 
+                            @else bg-light @endif">
+                                    </div>
+                                @endif
+                            </div>
                         @endforeach
-                    </tbody>
-                </table>
-                <div class="total-amount text-end">
-                    <strong>
-                        <p>Total Amount: ₱{{ number_format($order->total_amount, 2) }}</p>
-                    </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Styling -->
+        <style>
+            .step-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                z-index: 2 !important;
+            }
+
+            .step-connector {
+                position: absolute;
+                top: 25px;
+                /* center align with icon */
+                left: 56.4%;
+                width: 88.5%;
+                height: 4px;
+                z-index: 1;
+            }
+        </style>
+    </div>
+
+    <!-- Customer & Delivery Info -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3"><i class="fa fa-user me-2"></i> Customer Details</h5>
+                    <p class="m-0"><strong>Name:</strong>
+                        {{ $order->user->user_type == 'admin' ? 'Walk-in' : $order->user->name }}</p>
+                    @if ($order->user->user_type == 'admin')
+                    @else
+                        <p class="m-0"><strong>Phone:</strong> {{ $order->user->phone_number ?? 'N/A' }}</p>
+                        <p class="m-0"><strong>Email:</strong> {{ $order->user->email ?? 'N/A' }}</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3"><i class="fa fa-truck me-2"></i> Delivery Info</h5>
+                    <p class="m-0"><strong>Type of Service:</strong> {{ $order->type_of_service }}</p>
+                    @if ($order->type_of_service == 'Pick-up')
+                        <p class="m-0"><strong>Pick-up Date:</strong>
+                            {{ $order->pick_up_datetime ? \Carbon\Carbon::parse($order->pick_up_datetime)->format('F d, Y h:i A') : '' }}
+                        </p>
+                        <p class="m-0"><strong>Comment:</strong> {{ $order->comment ?? '' }}</p>
+                    @elseif ($order->type_of_service == 'Walk-in')
+                    @else
+                        <p class="m-0"><strong>Address:</strong> {{ $order->shipping_address }}</p>
+                        <p class="m-0"><strong>Delivery Date:</strong> {{ $order->delivery_date ?? 'Not set' }}</p>
+                        <p class="m-0"><strong>Notes:</strong> {{ $order->delivery_notes ?? '' }}</p>
+                        <p class="m-0"><strong>Comment:</strong> {{ $order->comment ?? '' }}</p>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Request Delivery Date Modal -->
+    @php
+        if ($order->user->user_type == 'admin') {
+            $num = 0;
+        } else {
+            $num = 4;
+        }
+    @endphp
+
+    <!-- Order Items -->
+    <div class="card shadow-sm mb-{{ $num }}">
+        <div class="card-body">
+            <h5 class="fw-bold mb-3"><i class="fa fa-shopping-cart me-2"></i> Order Items</h5>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th class="text-end">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($order->items as $key => $item)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td class="d-flex align-items-center">
+                                    <img src="{{ asset($item->product->product_image ?? 'img/default-egg.jpg') }}"
+                                        class="rounded me-2 img-fluid" width="100" height="100" alt="product">
+                                    {{ $item->product->product_name }}
+                                </td>
+                                <td>₱{{ number_format($item->price, 2) }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td class="text-end">₱{{ number_format($item->price * $item->quantity, 2) }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="text-end fw-bold fs-5 mt-3">
+                    Total: ₱{{ number_format($order->total_amount, 2) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if ($order->user->user_type == 'admin')
+    @else
+        <!-- Rating Section -->
+        <div class="card shadow-sm mb-0">
+            <div class="card-body">
+                <h5 class="fw-bold"><i class="fa fa-star text-warning me-2"></i> Rating</h5>
+                @if ($order->rating)
+                    <p class="m-0"><strong>Service Speed:</strong> {!! str_repeat('⭐', $order->rating->service_speed) !!}</p>
+                    <p class="m-0"><strong>Egg Quality:</strong> {!! str_repeat('⭐', $order->rating->egg_quality) !!}</p>
+                    <p class="m-0"><strong>Egg Size Accuracy:</strong> {!! str_repeat('⭐', $order->rating->egg_size_accuracy) !!}</p>
+                    <p class="mt-2"><strong>Comment:</strong> {{ $order->rating->comment ?? '-' }}</p>
+                @else
+                    <p class="text-muted">No rating yet.</p>
+                @endif
+            </div>
+        </div>
+    @endif
+
+    <!-- Delivery Modal -->
     <div class="modal fade" id="confirmRequestModal" tabindex="-1" aria-labelledby="confirmRequestModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -160,14 +200,13 @@
                 <input type="hidden" name="order_id" value="{{ $order->id }}">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmRequestModalLabel">Schedule of Delivery</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-3 mb-3">
                             <label for="delivery_date" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="delivery_date" name="delivery_date"
-                                rows="2" required />
+                            <input type="date" class="form-control" id="delivery_date" name="delivery_date" required>
                         </div>
                         <div class="col-12 mb-3">
                             <label for="comment" class="form-label">Comment <i>(optional)</i></label>
@@ -183,23 +222,21 @@
         </div>
     </div>
 
-    <!-- Pick-up Confirmation Modal -->
-    <div class="modal fade" id="confirmPickUpRequestModal" tabindex="-1" aria-labelledby="confirmPickUpRequestModalLabel"
-        aria-hidden="true">
+    <!-- Pick-up Modal -->
+    <div class="modal fade" id="confirmPickUpRequestModal" tabindex="-1"
+        aria-labelledby="confirmPickUpRequestModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <form action="{{ route('order.accept') }}" method="POST" class="modal-content">
                 @csrf
                 <input type="hidden" name="order_id" value="{{ $order->id }}">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmPickUpRequestModalLabel">Pick-up Confirmation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12 mb-3">
-                            <label for="comment" class="form-label">Comment <i>(optional)</i></label>
-                            <textarea name="comment" id="comment" class="form-control" rows="3"></textarea>
-                        </div>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment <i>(optional)</i></label>
+                        <textarea name="comment" id="comment" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

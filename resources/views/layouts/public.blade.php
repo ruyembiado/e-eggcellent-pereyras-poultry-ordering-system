@@ -28,7 +28,7 @@
         <div class="main">
             <nav class="navbar navbar-expand-lg px-0 px-sm-4 bg-dark shadow-sm">
                 <div class="container">
-                    <a class="navbar-brand d-flex align-items-center text-light" href="/">
+                    <a class="navbar-brand p-0 d-flex align-items-center text-light" href="/">
                         <img src="{{ asset('img/eggcellent-logo.webp') }}" width="70" alt="pereyras-logo">
                         <h1 class="eggcellent-title text-light ms-2 mb-0 d-none d-sm-block">E-EGGCELLENT PORTAL</h1>
                     </a>
@@ -41,18 +41,18 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
                         <ul class="navbar-nav gap-3 align-items-center">
                             <li class="nav-item">
-                                <a class="nav-link text-light" href="/"><i class="fa fa-home"></i> Home</a>
+                                <a class="nav-link text-light" href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" href="/contact-us"><i class="fa fa-phone"></i> Contact
+                                <a class="nav-link text-light" href="{{ url('/contact-us') }}"><i class="fa fa-phone"></i> Contact
                                     Us</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" href="/shop"><i class="fa fa-shop"></i> Shop</a>
+                                <a class="nav-link text-light" href="{{ url('/shop') }}"><i class="fa fa-shop"></i> Shop</a>
                             </li>
 
                             @if (!auth()->check())
-                                <button class="btn btn-light" type="button" data-bs-toggle="offcanvas"
+                                <button class="btn btn-light py-1 px-2" type="button" data-bs-toggle="offcanvas"
                                     data-bs-target="#loginOffcanvas" aria-controls="loginOffcanvas">
                                     <i class="fa fa-user-circle"></i> Admin
                                 </button>
@@ -60,12 +60,12 @@
 
                             @if (auth()->check() && auth()->user()->user_type == 'customer')
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" href="/cart">
+                                    <a class="nav-link text-light" href="{{ url('/cart') }}">
                                         <i class="fa-solid fa-cart-shopping"></i> Cart
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" href="/dashboard">
+                                    <a class="nav-link text-light" href="{{ url('/dashboard') }}">
                                         <i class="fa-solid fa-dashboard"></i> Dashboard</a>
                                 </li>
 
@@ -112,7 +112,7 @@
                     @endif
                     <form action="{{ route('login') }}" method="post">
                         @csrf
-
+                        <input type="hidden" name="admin_login" value="admin_login">
                         <div class="mb-2">
                             <label for="email" class="form-label text-light">Email</label>
                             <div class="input-group w-100">
@@ -189,7 +189,6 @@
     <script src="{{ asset('js/script.js') }}"></script>
     <script>
         function hideAlerts(delay = 3000) {
-            console.log('Hiding alerts');
             if ($('.alert-success, .alert-danger').length) {
                 setTimeout(function() {
                     $('.alert-success, .alert-danger').fadeOut('slow');
@@ -197,7 +196,16 @@
             }
         }
         hideAlerts();
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            @if ($errors->any())
+                @if (old('admin_login'))
+                    // Open login offcanvas if email exists but not name (login form)
+                    var loginOffcanvas = new bootstrap.Offcanvas(document.getElementById('loginOffcanvas'));
+                    loginOffcanvas.show();
+                @endif
+            @endif
+        });
     </script>
 </body>
-
 </html>
