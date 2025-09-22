@@ -23,4 +23,16 @@ class Rating extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+    public function user()
+    {
+        return $this->hasOneThrough(
+            User::class, // The model you want to access
+            Order::class, // The intermediate model
+            'id',        // Foreign key on the intermediate table (firstKey)
+            'id',        // Foreign key on the final table (secondKey)
+            'order_id',  // Local key on the current model (localKey)
+            'user_id'    // Local key on the intermediate model (secondLocalKey )
+        );
+    }
 }

@@ -348,3 +348,7 @@ h1.home-title {
         right: 0;
     }
 }
+
+.carousel-control-next, .carousel-control-prev {
+    width: 5% !important;
+}

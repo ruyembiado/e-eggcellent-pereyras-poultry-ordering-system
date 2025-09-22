@@ -32,4 +32,14 @@ class RatingController extends Controller
 
         return back()->with('success', 'Rating submitted successfully.');
     }
+
+    public function getTestimonials()
+    {
+        $testimonials = Rating::with('order.user')
+            // ->orderBy('created_at', 'DESC')
+            ->get()
+            ->groupBy(fn($rating) => $rating->order->user->id ?? 0);
+
+        return view('testimonial', compact('testimonials'));
+    }
 }

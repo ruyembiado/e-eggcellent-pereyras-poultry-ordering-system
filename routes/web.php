@@ -26,6 +26,7 @@ Route::get('/login', [AuthController::class, 'index']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/shop', [ShopController::class, 'index']);
+Route::get('/testimonials', [RatingController::class, 'getTestimonials'])->name('testimonials.index');
 Route::get('/contact-us', [AuthController::class, 'contact']);
 Route::get('/login-auth', [AuthController::class, 'loginPage'])->name('login.page');
 Route::get('/register-auth', [AuthController::class, 'registerPage'])->name('register.page');

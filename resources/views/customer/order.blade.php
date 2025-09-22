@@ -60,7 +60,7 @@
                                             </span>
                                         </td>
                                         <td>₱{{ number_format($order->total_amount, 2) }}</td>
-                                        <td>{{ $order->created_at->format('Y-m-d H:i A') }}</td>
+                                        <td>{{ $order->created_at->format('Y-m-d h:i A') }}</td>
                                         <td>
                                             <a href="{{ route('order.view', $order->id) }}"
                                                 class="btn btn-primary btn-sm">View</a>
@@ -104,7 +104,7 @@
                                             </span>
                                         </td>
                                         <td>₱{{ number_format($order->total_amount, 2) }}</td>
-                                        <td>{{ $order->created_at->format('Y-m-d H:i A') }}</td>
+                                        <td>{{ $order->created_at->format('Y-m-d h:i A') }}</td>
                                         <td>
                                             <div class="d-flex align-items-center gap-1">
                                                 <a href="{{ route('order.view', $order->id) }}"
@@ -154,7 +154,7 @@
                                             </span>
                                         </td>
                                         <td>₱{{ number_format($order->total_amount, 2) }}</td>
-                                        <td>{{ $order->created_at->format('Y-m-d H:i A') }}</td>
+                                        <td>{{ $order->created_at->format('Y-m-d h:i A') }}</td>
                                         <td>
                                             <a href="{{ route('order.view', $order->id) }}"
                                                 class="btn btn-primary btn-sm">View</a>
@@ -285,7 +285,7 @@
                                             </span>
                                         </td>
                                         <td>₱{{ number_format($order->total_amount, 2) }}</td>
-                                        <td>{{ $order->created_at->format('Y-m-d H:i A') }}</td>
+                                        <td>{{ $order->created_at->format('Y-m-d h:i A') }}</td>
                                         <td>
                                             <a href="{{ route('order.view', $order->id) }}"
                                                 class="btn btn-primary btn-sm">View</a>

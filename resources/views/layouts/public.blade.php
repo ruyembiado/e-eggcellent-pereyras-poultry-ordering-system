@@ -41,14 +41,21 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
                         <ul class="navbar-nav gap-3 align-items-center">
                             <li class="nav-item">
-                                <a class="nav-link text-light" href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a>
+                                <a class="nav-link text-light" href="{{ url('/') }}"><i class="fa fa-home"></i>
+                                    Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" href="{{ url('/contact-us') }}"><i class="fa fa-phone"></i> Contact
+                                <a class="nav-link text-light" href="{{ url('/contact-us') }}"><i
+                                        class="fa fa-phone"></i> Contact
                                     Us</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" href="{{ url('/shop') }}"><i class="fa fa-shop"></i> Shop</a>
+                                <a class="nav-link text-light" href="{{ url('/testimonials') }}"><i class="fa fa-comments"></i>
+                                    Testimonials</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" href="{{ url('/shop') }}"><i class="fa fa-shop"></i>
+                                    Shop</a>
                             </li>
 
                             @if (!auth()->check())
@@ -208,4 +215,5 @@
         });
     </script>
 </body>
+
 </html>

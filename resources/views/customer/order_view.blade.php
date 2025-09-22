@@ -106,7 +106,8 @@
                     @elseif ($order->type_of_service == 'Walk-in')
                     @else
                         <p class="m-0"><strong>Address:</strong> {{ $order->shipping_address }}</p>
-                        <p class="m-0"><strong>Delivery Date:</strong> {{ $order->delivery_date ?? 'Not set' }}</p>
+                        <p class="m-0"><strong>Delivery Date:</strong>
+                            {{ \Carbon\Carbon::parse($order->delivery_date)->format('F d, Y') ?? 'Not set' }}</p>
                         <p class="m-0"><strong>Notes:</strong> {{ $order->delivery_notes ?? '' }}</p>
                         <p class="m-0"><strong>Comment:</strong> {{ $order->comment ?? '' }}</p>
                     @endif
@@ -168,10 +169,26 @@
             <div class="card-body">
                 <h5 class="fw-bold"><i class="fa fa-star text-warning me-2"></i> Rating</h5>
                 @if ($order->rating)
-                    <p class="m-0"><strong>Service Speed:</strong> {!! str_repeat('⭐', $order->rating->service_speed) !!}</p>
-                    <p class="m-0"><strong>Egg Quality:</strong> {!! str_repeat('⭐', $order->rating->egg_quality) !!}</p>
-                    <p class="m-0"><strong>Egg Size Accuracy:</strong> {!! str_repeat('⭐', $order->rating->egg_size_accuracy) !!}</p>
-                    <p class="mt-2"><strong>Comment:</strong> {{ $order->rating->comment ?? '-' }}</p>
+                    <p class="m-0">
+                        <strong>Service Speed:</strong>
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i class="fa{{ $i <= $order->rating->service_speed ? 's' : 'r' }} fa-star text-warning"></i>
+                        @endfor
+                    </p>
+                    <p class="m-0">
+                        <strong>Egg Quality:</strong>
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i class="fa{{ $i <= $order->rating->egg_quality ? 's' : 'r' }} fa-star text-warning"></i>
+                        @endfor
+                    </p>
+                    <p class="m-0">
+                        <strong>Egg Size Accuracy:</strong>
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i
+                                class="fa{{ $i <= $order->rating->egg_size_accuracy ? 's' : 'r' }} fa-star text-warning"></i>
+                        @endfor
+                    </p>
+                    <p class="mt-2"><strong>Comment:</strong> {{ $order->rating->comment ?? '' }}</p>
                 @else
                     <p class="text-muted">No rating yet.</p>
                 @endif
