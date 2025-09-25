@@ -152,11 +152,11 @@
                             @enderror
                         </div>
 
-                        <div class="mb-2">
+                        <!-- <div class="mb-2">
                             <a href="#" class="text-light"><i>Forgot Password?</i></a>
                         </div>
-
-                        <div class="mt-2">
+                         -->
+                        <div class="mt-3">
                             <button type="submit" class="btn btn-warning">Login</button>
                         </div>
                     </form>

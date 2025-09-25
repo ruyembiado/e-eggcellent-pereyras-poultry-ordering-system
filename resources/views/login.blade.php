@@ -32,7 +32,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-2">
+                <div class="mb-3">
                     <label for="password" class="form-label text-dark">Password</label>
                     <div class="input-group">
                         <span class="input-group-text border bg-light">
@@ -46,9 +46,9 @@
                     @enderror
                 </div>
 
-                <div class="mb-2 text-start">
-                    <a href="#" class="text-dark"><i>Forgot Password?</i></a>
-                </div>
+               <!--  <div class="mb-2 text-start">
+                   <a href="#" class="text-dark"><i>Forgot Password?</i></a>
+               </div> -->
 
                 <div class="d-grid">
                     <button type="submit" class="btn btn-warning">Login</button>

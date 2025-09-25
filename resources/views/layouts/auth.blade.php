@@ -180,7 +180,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 
     <!-- Print.js JS -->
-    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <!--Custom Script -->
     <script src="{{ asset('js/script.js') }}"></script>

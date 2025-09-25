@@ -41,6 +41,7 @@
                                 </td>
                                 <td>{{ $product->created_at->format('Y-m-d h:i a') }}</td>
                                 <td>
+                                	<div class="d-flex gap-1">
                                     <a href="{{ route('product.edit', $product->id) }}"
                                         class="btn btn-warning btn-sm">Edit</a>
                                     <form action="{{ route('product.destroy', $product->id) }}" method="POST"
@@ -49,12 +50,13 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                     </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-            </div>
+            </td>
         </div>
     </div>
 @endsection
