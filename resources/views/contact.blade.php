@@ -34,7 +34,7 @@
                         <h4 class="mb-0">Contact Us</h4>
                     </div>
 
-                    <form action="" method="POST">
+                    <form action="{{ route('contact.send') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <input type="text" name="name" class="form-control" placeholder="Name" required>

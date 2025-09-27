@@ -8,6 +8,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -178,5 +179,30 @@ class AuthController extends Controller
     public function RegisterPage()
     {
         return view('register');
+    }
+    
+    public function sendContact(Request $request)
+    {
+        $validated = $request->validate([
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email',
+            'phone'   => 'required|string|max:20',
+            'message' => 'required|string|max:1000',
+        ]);
+
+        $adminEmail = env('MAIL_FROM_ADDRESS');
+
+        Mail::raw(
+            "Name: {$validated['name']}\n" .
+            "Email: {$validated['email']}\n" .
+            "Phone: {$validated['phone']}\n" .
+            "Message: {$validated['message']}\n",
+            function ($mail) use ($validated, $adminEmail) {
+                $mail->to($adminEmail)
+                     ->subject('New Contact Message from ' . $validated['name']);
+            }
+        );
+
+        return back()->with('success', 'Your message has been sent successfully!');
     }
 }

@@ -30,6 +30,7 @@ Route::get('/testimonials', [RatingController::class, 'getTestimonials'])->name(
 Route::get('/contact-us', [AuthController::class, 'contact']);
 Route::get('/login-auth', [AuthController::class, 'loginPage'])->name('login.page');
 Route::get('/register-auth', [AuthController::class, 'registerPage'])->name('register.page');
+Route::post('/contact-us', [AuthController::class, 'sendContact'])->name('contact.send');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [AuthController::class, 'dashboard']);
