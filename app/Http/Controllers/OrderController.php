@@ -6,6 +6,8 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -98,6 +100,15 @@ class OrderController extends Controller
             $order->comment = $request->comment;
         }
         $order->save();
+        
+        $apiKey = env('SEMAPHORE_API_KEY'); 
+				$number = $order->user->phone_number;
+		    $date = Carbon::parse($order->delivery_date)->format('F j, Y, l');
+		    $message = "Hi ". $order->user->name .", your order #". $order->order_number ." is scheduled for delivery on ". $date . ".";
+
+				$auth = new AuthController();
+				$result = $auth->sendSMSNotification($apiKey, $number, $message);
+				dd($message);
 
         return redirect()->back()->with('success', 'Order has been accepted.');
     }

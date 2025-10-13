@@ -205,4 +205,50 @@ class AuthController extends Controller
 
         return back()->with('success', 'Your message has been sent successfully!');
     }
+    
+    public function sendSMSNotification($apiKey, $number, $message) {
+	    // If there's no API key, do not proceed
+	    if (empty($apiKey)) {
+	        return [
+	            'success' => false,
+	            'message' => 'API key is missing. SMS not sent.'
+	        ];
+	    }
+	
+	    // Semaphore SMS API endpoint
+	    $url = 'https://semaphore.co/api/v4/messages';
+	
+	    // Prepare POST fields
+	    $params = [
+	        'apikey' => $apiKey,
+	        'number' => $number,
+	        'message' => $message,
+	        'sendername' => 'SEMAPHORE', // Optional: You can register a sender name in Semaphore
+	    ];
+	
+	    // Send SMS using cURL
+	    $ch = curl_init();
+	    curl_setopt($ch, CURLOPT_URL, $url);
+	    curl_setopt($ch, CURLOPT_POST, true);
+	    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	
+	    $response = curl_exec($ch);
+	    $error = curl_error($ch);
+	    curl_close($ch);
+	
+	    // Handle response
+	    if ($error) {
+	        return [
+	            'success' => false,
+	            'message' => 'cURL Error: ' . $error
+	        ];
+	    }
+	
+	    return [
+	        'success' => true,
+	        'response' => json_decode($response, true)
+	    ];
+	}
+
 }
