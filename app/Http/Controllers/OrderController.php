@@ -102,13 +102,12 @@ class OrderController extends Controller
         $order->save();
         
         $apiKey = env('SEMAPHORE_API_KEY'); 
-				$number = $order->user->phone_number;
+				$number = preg_replace('/^0/', '63', $order->user->phone_number);
 		    $date = Carbon::parse($order->delivery_date)->format('F j, Y, l');
 		    $message = "Hi ". $order->user->name .", your order #". $order->order_number ." is scheduled for delivery on ". $date . ".";
 
 				$auth = new AuthController();
 				$result = $auth->sendSMSNotification($apiKey, $number, $message);
-				dd($message);
 
         return redirect()->back()->with('success', 'Order has been accepted.');
     }

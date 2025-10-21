@@ -216,14 +216,14 @@ class AuthController extends Controller
 	    }
 	
 	    // Semaphore SMS API endpoint
-	    $url = 'https://semaphore.co/api/v4/messages';
+	    $url = 'https://api.semaphore.co/api/v4/messages';
 	
 	    // Prepare POST fields
 	    $params = [
 	        'apikey' => $apiKey,
 	        'number' => $number,
 	        'message' => $message,
-	        'sendername' => 'SEMAPHORE', // Optional: You can register a sender name in Semaphore
+	        'sendername' => 'EGGCELLENT', 
 	    ];
 	
 	    // Send SMS using cURL
