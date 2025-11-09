@@ -65,9 +65,11 @@
                                                 <p class="mb-1 mt-2">Price:
                                                     ₱{{ number_format($product->product_price, 2) }}</p>
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <label for="quantity{{ $product->id }}">Stock: {{ $product->quantity }}</label>
+                                                <br>
                                                 <label for="quantity{{ $product->id }}">Quantity:</label>
                                                 <input type="number" name="quantity" id="quantity{{ $product->id }}"
-                                                    class="form-control" value="1" min="1"
+                                                    class="form-control" value="1" min="1" max="{{ $product->quantity }}"
                                                     onchange="updateSubtotal({{ $product->id }}, {{ $product->product_price }})">
                                                 <p class="mt-2"><strong>Subtotal:</strong> ₱<span
                                                         id="subtotal{{ $product->id }}">{{ number_format($product->product_price, 2) }}</span>

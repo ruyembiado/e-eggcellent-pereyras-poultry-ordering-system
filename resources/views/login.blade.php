@@ -3,6 +3,9 @@
 @section('content')
     <main class="content px-3 py-5 col-12 bg-dark bg-gradient" id="page-top">
         <div class="bg-light p-4 rounded mx-auto" style="max-width: 400px;">
+        		<div class="text-end">
+        				<a href="{{ url('/') }}"><i class="fa fa-close bg-dark rounded p-2 text-light"></i></i>
+        		</div>
             <div class="text-center mb-2">
                 <h5 class="text-dark fs-3">Login</h5>
                 <img src="{{ asset('img/eggcellent-logo.webp') }}" alt="eggcellent-logo" class="img-fluid my-2" width="200">

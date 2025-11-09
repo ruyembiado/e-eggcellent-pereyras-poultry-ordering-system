@@ -27,4 +27,9 @@ class Order extends Model
     {
         return $this->hasOne(Rating::class);
     }
+    
+    public function walkin()
+    {
+        return $this->hasOne(Walkin::class);
+    }
 }

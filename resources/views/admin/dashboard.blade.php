@@ -130,14 +130,18 @@
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
                                                     <td>{{ $order->order_number }}</td>
-                                                    <td>{{ $order->user->name ?? 'N/A' }}</td> <!-- Display user name -->
+                                                    <td>{{ isset($order->walkin) ? ($order->walkin->customer_name ?? 'Walk-in') : $order->user->name }}</td> <!-- Display user name -->
                                                     <td>
                                                         <span
                                                             class="badge 
                                                         @if ($order->status == 'Pending') bg-warning
                                                         @elseif($order->status == 'Done') bg-success
+<<<<<<< HEAD
 
 @elseif($order->status == 'Delivered') bg-success
+=======
+                                                        @elseif($order->status == 'Delivered') bg-success
+>>>>>>> 4bf0635 (Applied updates and fixes)
                                                         @elseif($order->status == 'Accepted') bg-success
                                                         @elseif($order->status == 'Cancelled') bg-danger @endif">
                                                             {{ $order->status }}

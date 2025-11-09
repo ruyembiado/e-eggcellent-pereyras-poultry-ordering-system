@@ -83,11 +83,14 @@ class CartController extends Controller
                 'quantity' => $item->quantity,
                 'subtotal' => $item->product->product_price * $item->quantity,
             ]);
-
+	
             $product = Product::find($item->product_id);
             if ($product) {
                 // Calculate new stock
                 $newStock = $product->quantity - $item->quantity;
+                if ($newStock == 0) {
+                		$product->status = 'Out of Stock';
+                }
                 // Prevent negative stock
                 $product->quantity = max(0, $newStock);
                 $product->save();

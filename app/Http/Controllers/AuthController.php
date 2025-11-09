@@ -206,6 +206,20 @@ class AuthController extends Controller
         return back()->with('success', 'Your message has been sent successfully!');
     }
     
+    public function sendActivationMailNotification($email, $name)
+		{
+		    $adminEmail = env('MAIL_FROM_ADDRESS');
+		
+		    Mail::raw(
+		        "Hello {$name},\n\nYour account has been activated.\n\nThank you,\nE-Eggcellent Team",
+		        function ($mail) use ($email, $adminEmail) {
+		            $mail->to($email)
+		                 ->from($adminEmail, 'E-Eggcellent')
+		                 ->subject('Account Activation Notification from E-Eggcellent');
+		        }
+		    );
+		}
+    
     public function sendSMSNotification($apiKey, $number, $message) {
 	    // If there's no API key, do not proceed
 	    if (empty($apiKey)) {

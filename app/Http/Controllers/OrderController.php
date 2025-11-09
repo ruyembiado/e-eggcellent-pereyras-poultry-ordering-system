@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Walkin;
 use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -41,6 +42,11 @@ class OrderController extends Controller
             'delivery_notes' => null,
             'status' => 'Delivered',
         ]);
+        
+        $walkin = Walkin::create([
+		        'order_id' => $order->id,
+		        'customer_name' => $request->customer_name,
+        ]);
 
         foreach ($cartItems as $item) {
             OrderItem::create([
@@ -71,7 +77,7 @@ class OrderController extends Controller
                 return $query->where('status', $request->status);
             })
                 ->orderBy('created_at', 'desc')
-                ->with('items', 'rating')
+                ->with('items', 'rating', 'walkin')
                 ->get();
 
             return view('admin.request_order', compact('orders'));

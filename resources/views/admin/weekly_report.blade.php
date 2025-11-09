@@ -114,8 +114,8 @@
 				<thead>
 					<tr>
 						<th>Day</th>
-						<th>No. of Orders</th>
 						<th>Products</th>
+						<th>No. of Orders</th>
 						<th>Total</th>
 					</tr>
 				</thead>
@@ -129,9 +129,9 @@
 					@foreach ($weekDays as $dayName => $dayOrders)
 					<tr>
 						<td>{{ $dayName }}</td>
-						<td>{{ collect($dayOrders)->pluck('products')->implode(', ') }}</td>
-						<td>{{ collect($dayOrders)->sum('quantity') }}</td>
-						<td>₱{{ number_format(collect($dayOrders)->sum('total'), 2) }}</td>
+						<td>{{ implode(', ', array_keys($dayOrders['products'])) }}</td>
+						<td>{{ $dayOrders['quantity'] }}</td>
+						<td>₱{{ number_format($dayOrders['total'], 2) }}</td>
 					</tr>
 					@endforeach
 					@endforeach

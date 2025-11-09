@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\AuthController;
 
 class UserController extends Controller
 {
@@ -19,6 +20,10 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         if ($request->status == 'inactive') {
             $user->status = 'active';
+            
+            $auth = new AuthController();
+            $auth->sendActivationMailNotification($user->email, $user->name);
+            
         } else {
             $user->status = 'inactive';
         }

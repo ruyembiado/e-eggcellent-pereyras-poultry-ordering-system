@@ -98,7 +98,7 @@
             @yield('content')
 
             <!-- Offcanvas for the Login Form -->
-            <div class="offcanvas offcanvas-end bg-dark bg-gradient" tabindex="-1" id="loginOffcanvas"
+            <div class="offcanvas offcanvas-end bg-theme-primary" tabindex="-1" id="loginOffcanvas"
                 aria-labelledby="loginOffcanvasLabel">
                 <div class="offcanvas-body">
                     <div class="offcanvas-header">

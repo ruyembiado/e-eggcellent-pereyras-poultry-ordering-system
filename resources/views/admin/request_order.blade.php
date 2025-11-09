@@ -11,7 +11,7 @@
         <div class="card-body">
             <form method="GET" action="{{ route('order.index') }}" class="d-print-none">
                 <div class="d-flex justify-content-start align-items-end gap-2 mb-3">
-                    <div class="status col-12 col-lg-2 col-xl-1 ">
+                    <div class="status col-12 col-lg-2 col-xl-1">
                         <label for="status" class="form-label mb-0">Status:</label>
                         <div class="p-0">
                             <select name="status" id="status" class="form-control form-control-sm"
@@ -50,8 +50,7 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $order->order_number }}</td>
-                                <td>
-                                    {{ $order->user->user_type == 'admin' ? 'Walk-in' : $order->user->name }}</td>
+                                <td>{{ isset($order->walkin) ? ($order->walkin->customer_name ?? 'Walk-in') : $order->user->name }}</td>
                                 <td>
                                     <span
                                         class="badge 

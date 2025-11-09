@@ -26,13 +26,13 @@
                     <tbody>
                         @foreach ($products as $key => $product)
                             <tr>
-                                <td>{{ $key + 1 }}</td>
+                                <td class="text-center">{{ $key + 1 }}</td>
                                 <td>
                                     <img src="{{ asset($product->product_image ?? 'img/default-egg.jpg') }}"
                                         alt="Product Image" class="img-fluid" width="70">
                                 </td>
                                 <td>{{ $product->product_name }}</td>
-                                <td>{{ $product->quantity }}</td>
+                                <td class="text-center">{{ $product->quantity }}</td>
                                 <td>₱{{ number_format($product->product_price, 2) }}</td>
                                 <td>
                                     <span class="badge {{ $product->status == 'Available' ? 'bg-success' : 'bg-danger' }}">

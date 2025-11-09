@@ -96,7 +96,8 @@
                 <div class="card-body">
                     <h5 class="fw-bold mb-3"><i class="fa fa-user me-2"></i> Customer Details</h5>
                     <p class="m-0"><strong>Name:</strong>
-                        {{ $order->user->user_type == 'admin' ? 'Walk-in' : $order->user->name }}</p>
+                        {{ isset($order->walkin) ? ($order->walkin->customer_name ?? 'Walk-in') : $order->user->name }}
+                    </p>
                     @if ($order->user->user_type == 'admin')
                     @else
                         <p class="m-0"><strong>Phone:</strong> {{ $order->user->phone_number ?? 'N/A' }}</p>

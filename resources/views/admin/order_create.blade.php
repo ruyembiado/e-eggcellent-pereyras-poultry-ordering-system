@@ -57,6 +57,10 @@
                     <div class="card-body">
                         <form action="{{ route('order.walkin.store') }}" method="POST">
                             @csrf
+                            <label for="customer_name" class="form-label">Customer Name</label>
+                            <input type="text" name="customer_name" placeholder="Enter customer name"
+		                        class="form-control @error('customer_name') is-invalid @enderror mb-2" id="customer_name"
+		                        value="" required>
                             <table class="table table-sm borderless">
                                 <thead>
                                     <tr>
@@ -74,7 +78,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="mb-3 col-3 mx-start">
+                            <div class="mb-3 col-4 mx-start">
                                 <label class="form-label fw-bold">Total</label>
                                 <div class="d-flex align-items-center">
                                     <span class="me-1">₱</span><input type="text" name="total_amount" id="total"
