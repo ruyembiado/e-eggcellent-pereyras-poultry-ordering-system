@@ -76,7 +76,7 @@ class AuthController extends Controller
         return redirect('/')->with('success', 'Registration successful. Admin will verify your account.');
     }
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         $user = auth()->user();
 
@@ -93,7 +93,10 @@ class AuthController extends Controller
             $ordersThisYear = Order::where('created_at', '>=', $startOfYear)->count();
 
             // Get all orders for order table this month
-            $ordersMonth = Order::where('created_at', '>=', $startOfMonth)
+		        $ordersMonth = Order::when($request->filled('status') && $request->status !== 'All', function ($query) use ($request) {
+		                return $query->where('status', $request->status);
+		            })
+		            ->where('created_at', '>=', $startOfMonth)
                 ->orderBy('created_at', 'desc')
                 ->get();
 

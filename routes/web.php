@@ -33,7 +33,7 @@ Route::get('/register-auth', [AuthController::class, 'registerPage'])->name('reg
 Route::post('/contact-us', [AuthController::class, 'sendContact'])->name('contact.send');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [AuthController::class, 'dashboard']);
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // Product

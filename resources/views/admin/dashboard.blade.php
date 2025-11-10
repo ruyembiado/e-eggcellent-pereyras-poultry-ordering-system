@@ -109,10 +109,35 @@
                     <div class="card-body">
                         <div class="d-flex h-100 flex-column justify-content-between">
                             <div class="row align-items-center justify-content-between">
+                            	<div class="d-flex align-items-start justify-content-between">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                         Request Orders | This Month</div>
                                 </div>
+                                <form method="GET" action="{{ route('dashboard') }}" class="d-print-none">
+										                <div class="d-flex justify-content-start align-items-end gap-2 mb-3">
+										                    <div class="status col-12 col-lg-7 col-xl-7">
+										                        <label for="status" class="form-label mb-0">Status:</label>
+										                        <div class="p-0">
+										                            <select name="status" id="status" class="form-control form-control-sm"
+										                                onchange="this.form.submit()">
+										                                <option value="All" {{ request('status', 'All') == 'All' ? 'selected' : '' }}>All
+										                                </option>
+										                                <option value="Pending" {{ request('status') == 'Pending' ? 'selected' : '' }}>Pending
+										                                </option>
+										                                <option value="Accepted" {{ request('status') == 'Accepted' ? 'selected' : '' }}>Accepted
+										                                </option>
+										                                <option value="Delivered" {{ request('status') == 'Delivered' ? 'selected' : '' }}>Delivered
+										                                </option>
+										                            </select>
+										                        </div>
+										                    </div>
+										                    <div class="clear-status">
+										                        <a class="btn btn-danger btn-sm" href="{{ route('dashboard') }}">Clear</a>
+										                    </div>
+										                </div>
+										            </form>
+										                </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
                                         <thead>
@@ -136,12 +161,8 @@
                                                             class="badge 
                                                         @if ($order->status == 'Pending') bg-warning
                                                         @elseif($order->status == 'Done') bg-success
-<<<<<<< HEAD
-
-@elseif($order->status == 'Delivered') bg-success
-=======
+																												@elseif($order->status == 'Delivered') bg-success
                                                         @elseif($order->status == 'Delivered') bg-success
->>>>>>> 4bf0635 (Applied updates and fixes)
                                                         @elseif($order->status == 'Accepted') bg-success
                                                         @elseif($order->status == 'Cancelled') bg-danger @endif">
                                                             {{ $order->status }}

@@ -14,7 +14,7 @@
                             <div class="card-body d-flex flex-column justify-content-start">
                                 <!-- User Info -->
                                 @php $user = $ratings->first()->order->user; @endphp
-                                <div class="d-flex col-9 mx-auto align-items-center mb-3 justify-content-between">
+                                <div class="d-flex col-10 mx-auto align-items-center mb-3 justify-content-between">
                                     <div class="d-flex align-items-center">
                                         <div class="rounded-circle text-dark bg-theme-secondary d-flex justify-content-center align-items-center me-2"
                                             style="width: 45px; height: 45px; font-weight: bold;">

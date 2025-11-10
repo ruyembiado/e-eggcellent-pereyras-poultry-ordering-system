@@ -157,7 +157,7 @@
                         </div>
                          -->
                         <div class="mt-3">
-                            <button type="submit" class="btn btn-warning">Login</button>
+                            <button type="submit" class="btn btn-warning w-100">Login</button>
                         </div>
                     </form>
                 </div>

@@ -1,6 +1,6 @@
 <div class="d-flex flex-column justify-content-between">
     <!-- Star Ratings -->
-    <div class="col-9 mx-auto" style="min-height: 180px;">
+    <div class="col-10 mx-auto" style="min-height: 180px;">
         <div class="d-flex align-items-center mb-1">
             <span class="me-2 fw-bold">Service Speed:</span>
             @for ($i = 1; $i <= 5; $i++)
