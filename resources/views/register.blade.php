@@ -4,7 +4,7 @@
 <main class="content px-3 py-5 col-12 bg-dark bg-gradient" id="page-top">
    <div class="bg-light p-4 rounded mx-auto" style="max-width: 400px;">
    		<div class="text-end">
-        	<a href="{{ url('/') }}"><i class="fa fa-close bg-dark rounded p-2 text-light"></i></i>
+        	<a href="{{ url('/') }}"><i class="fa fa-close bg-dark rounded p-2 text-light"></i></i></a>
       </div>
       <div class="text-center mb-2">
          <h5 class="text-dark fs-3">Register</h5>
