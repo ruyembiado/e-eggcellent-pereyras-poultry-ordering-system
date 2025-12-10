@@ -152,10 +152,11 @@
                             @enderror
                         </div>
 
-                        <!-- <div class="mb-2">
-                            <a href="#" class="text-light"><i>Forgot Password?</i></a>
-                        </div>
-                         -->
+                        <div class="mb-2 text-start">
+		                   <a href="{{ route('forget.password.get') }}"
+		                   class="text-light"><i>Forgot Password?</i></i>
+		               </div>
+		               
                         <div class="mt-3">
                             <button type="submit" class="btn btn-warning w-100">Login</button>
                         </div>

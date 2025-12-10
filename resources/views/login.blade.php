@@ -49,9 +49,9 @@
                     @enderror
                 </div>
 
-               <!--  <div class="mb-2 text-start">
-                   <a href="#" class="text-dark"><i>Forgot Password?</i></a>
-               </div> -->
+               <div class="mb-2 text-start">
+                   <a href="{{ url('forget-password') }}" class="text-dark"><i>Forgot Password?</i></a>
+               </div>
 
                 <div class="d-grid">
                     <button type="submit" class="btn btn-warning">Login</button>
