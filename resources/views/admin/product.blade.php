@@ -42,14 +42,17 @@
                                 <td>{{ $product->created_at->format('Y-m-d h:i a') }}</td>
                                 <td>
                                 	<div class="d-flex gap-1">
-                                    <a href="{{ route('product.edit', $product->id) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('product.destroy', $product->id) }}" method="POST"
-                                        onsubmit="return confirmDelete(event)" style="display: inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
+                                    	<a href="{{ route('product.edit', $product->id) }}" class="btn btn-warning btn-sm">
+										    <i class="fa fa-edit"></i>
+										</a>
+										<form action="{{ route('product.destroy', $product->id) }}" method="POST"
+										      onsubmit="return confirmDelete(event)" style="display: inline;">
+										    @csrf
+										    @method('DELETE')
+										    <button type="submit" class="btn btn-danger btn-sm">
+										        <i class="fa fa-trash"></i>
+										    </button>
+										</form>
                                     </div>
                                 </td>
                             </tr>

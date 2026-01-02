@@ -54,7 +54,9 @@
                                         onsubmit="return confirmDelete(event)" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                        <button type="submit" class="btn
+                                        btn-danger btn-sm"><i class="fa
+                                        fa-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>

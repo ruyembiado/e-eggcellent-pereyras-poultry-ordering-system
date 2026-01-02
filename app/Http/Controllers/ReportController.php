@@ -181,12 +181,10 @@ class ReportController extends Controller
         $endDate = $startDate->copy()->endOfMonth();
 
         $orders = Order::with(['items.product', 'user'])
-            ->whereDate('created_at', '>=', $startDate)
-            ->whereDate('created_at', '<=', $endDate)
-            ->where('status', 'Accepted')
-            ->orWhere('status', 'Delivered')
-            ->get();
-
+		    ->whereBetween('created_at', [$startDate, $endDate])
+		    ->whereIn('status', ['Accepted', 'Delivered'])
+		    ->get();
+            
         $report = $orders->groupBy(function ($order) {
             return Carbon::parse($order->created_at)->format('W'); // Group by week number
         })->map(function ($weekOrders, $weekNumber) {
@@ -227,11 +225,10 @@ class ReportController extends Controller
         $startDate = Carbon::createFromDate($selectedYear, 1, 1)->startOfYear();
         $endDate = $startDate->copy()->endOfYear();
 
-        $orders = Order::with(['items.product', 'user'])
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->where('status', 'Accepted')
-            ->orWhere('status', 'Delivered')
-            ->get();
+       $orders = Order::with(['items.product', 'user'])
+		    ->whereBetween('created_at', [$startDate, $endDate])
+		    ->whereIn('status', ['Accepted', 'Delivered'])
+		    ->get();
 
         $report = $orders->groupBy(function ($order) {
             return Carbon::parse($order->created_at)->format('m'); // Group by month

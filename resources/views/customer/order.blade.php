@@ -63,7 +63,8 @@
                                         <td>{{ $order->created_at->format('Y-m-d h:i A') }}</td>
                                         <td>
                                             <a href="{{ route('order.view', $order->id) }}"
-                                                class="btn btn-primary btn-sm">View</a>
+                                                class="btn btn-primary
+                                                btn-sm"><i class="fa fa-eye"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -108,7 +109,7 @@
                                         <td>
                                             <div class="d-flex align-items-center gap-1">
                                                 <a href="{{ route('order.view', $order->id) }}"
-                                                    class="btn btn-primary btn-sm">View</a>
+                                                    class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                                                 <a href="{{ route('order.received', $order->id) }}"
                                                     onclick="return confirmReceived(event)"
                                                     class="btn btn-success btn-sm">Received Order</a>
@@ -157,11 +158,12 @@
                                         <td>{{ $order->created_at->format('Y-m-d h:i A') }}</td>
                                         <td>
                                             <a href="{{ route('order.view', $order->id) }}"
-                                                class="btn btn-primary btn-sm">View</a>
+                                                class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                                             @if (@empty($order->rating))
                                                 <a href="#" data-bs-toggle="modal"
                                                     data-bs-target="#RateModal{{ $order->id }}"
-                                                    class="btn btn-warning btn-sm">Rate</a>
+                                                    class="btn btn-warning
+                                                    btn-sm"><i class="fa fa-star"></i></a>
                                             @endif
 
                                             <!-- Rate Modal -->
@@ -288,7 +290,7 @@
                                         <td>{{ $order->created_at->format('Y-m-d h:i A') }}</td>
                                         <td>
                                             <a href="{{ route('order.view', $order->id) }}"
-                                                class="btn btn-primary btn-sm">View</a>
+                                                class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

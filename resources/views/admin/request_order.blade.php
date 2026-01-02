@@ -66,8 +66,9 @@
                                 <td>{{ $order->created_at->format('Y-m-d h:i A') }}</td>
                                 <td>
                                     <div class="d-flex gap-1">
-                                        <a href="{{ route('order.view', $order->id) }}"
-                                            class="btn btn-primary btn-sm">View</a>
+                                        <a href="{{ route('order.view', $order->id) }}" class="btn btn-primary btn-sm" title="View">
+										    <i class="fa fa-eye"></i>
+										</a>
                                         {{-- @if ($order->status == 'Pending')
                                             <form action="{{ route('order.decline') }}" onsubmit="confirmCancel(event)" method="POST">
                                                 @csrf
