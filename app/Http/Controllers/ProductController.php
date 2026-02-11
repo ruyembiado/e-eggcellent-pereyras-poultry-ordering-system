@@ -67,18 +67,24 @@ class ProductController extends Controller
 
         // Handle image upload
         if ($request->hasFile('product_image')) {
-            // Delete old image
-            if (file_exists(public_path($product->product_image))) {
+            // Delete old image safely
+            if (
+                !empty($product->product_image) &&
+                file_exists(public_path($product->product_image)) &&
+                is_file(public_path($product->product_image))
+            ) {
                 unlink(public_path($product->product_image));
             }
 
+            // Upload new image
             $image = $request->file('product_image');
-            $imageName = time() . '.' . $image->extension();
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
             $image->move(public_path('img/product_uploads'), $imageName);
 
+            // Save correct relative path
             $product->product_image = 'img/product_uploads/' . $imageName;
         }
-
         $product->update([
             'product_name' => $request->product_name,
             'product_price' => number_format((float) $request->product_price, 2, '.', ''),

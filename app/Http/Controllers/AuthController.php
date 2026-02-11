@@ -93,10 +93,10 @@ class AuthController extends Controller
             $ordersThisYear = Order::where('created_at', '>=', $startOfYear)->count();
 
             // Get all orders for order table this month
-		        $ordersMonth = Order::when($request->filled('status') && $request->status !== 'All', function ($query) use ($request) {
-		                return $query->where('status', $request->status);
-		            })
-		            ->where('created_at', '>=', $startOfMonth)
+            $ordersMonth = Order::when($request->filled('status') && $request->status !== 'All', function ($query) use ($request) {
+                return $query->where('status', $request->status);
+            })
+                ->where('created_at', '>=', $startOfMonth)
                 ->orderBy('created_at', 'desc')
                 ->get();
 
@@ -183,7 +183,7 @@ class AuthController extends Controller
     {
         return view('register');
     }
-    
+
     public function sendContact(Request $request)
     {
         $validated = $request->validate([
@@ -195,77 +195,87 @@ class AuthController extends Controller
 
         $adminEmail = env('MAIL_FROM_ADDRESS');
 
-        Mail::raw(
-            "Name: {$validated['name']}\n" .
-            "Email: {$validated['email']}\n" .
-            "Phone: {$validated['phone']}\n" .
-            "Message: {$validated['message']}\n",
-            function ($mail) use ($validated, $adminEmail) {
-                $mail->to($adminEmail)
-                     ->subject('New Contact Message from ' . $validated['name']);
-            }
-        );
+        try {
+            Mail::raw(
+                "Name: {$validated['name']}\n" .
+                    "Email: {$validated['email']}\n" .
+                    "Phone: {$validated['phone']}\n" .
+                    "Message: {$validated['message']}\n",
+                function ($mail) use ($validated, $adminEmail) {
+                    $mail->to($adminEmail)
+                        ->subject('New Contact Message from ' . $validated['name']);
+                }
+            );
 
-        return back()->with('success', 'Your message has been sent successfully!');
+            return true; // Mail sent successfully
+        } catch (\Exception $e) {
+            return false; // Failed to send
+        }
     }
-    
-    public function sendActivationMailNotification($email, $name)
-		{
-		    $adminEmail = env('MAIL_FROM_ADDRESS');
-		
-		    Mail::raw(
-		        "Hello {$name},\n\nYour account has been activated.\n\nThank you,\nE-Eggcellent Team",
-		        function ($mail) use ($email, $adminEmail) {
-		            $mail->to($email)
-		                 ->from($adminEmail, 'E-Eggcellent')
-		                 ->subject('Account Activation Notification from E-Eggcellent');
-		        }
-		    );
-		}
-    
-    public function sendSMSNotification($apiKey, $number, $message) {
-	    // If there's no API key, do not proceed
-	    if (empty($apiKey)) {
-	        return [
-	            'success' => false,
-	            'message' => 'API key is missing. SMS not sent.'
-	        ];
-	    }
-	
-	    // Semaphore SMS API endpoint
-	    $url = 'https://api.semaphore.co/api/v4/messages';
-	
-	    // Prepare POST fields
-	    $params = [
-	        'apikey' => $apiKey,
-	        'number' => $number,
-	        'message' => $message,
-	        'sendername' => 'EGGCELLENT', 
-	    ];
-	
-	    // Send SMS using cURL
-	    $ch = curl_init();
-	    curl_setopt($ch, CURLOPT_URL, $url);
-	    curl_setopt($ch, CURLOPT_POST, true);
-	    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	
-	    $response = curl_exec($ch);
-	    $error = curl_error($ch);
-	    curl_close($ch);
-	
-	    // Handle response
-	    if ($error) {
-	        return [
-	            'success' => false,
-	            'message' => 'cURL Error: ' . $error
-	        ];
-	    }
-	
-	    return [
-	        'success' => true,
-	        'response' => json_decode($response, true)
-	    ];
-	}
 
+    public function sendActivationMailNotification($email, $name)
+    {
+        $adminEmail = env('MAIL_FROM_ADDRESS');
+
+        try {
+            Mail::raw(
+                "Hello {$name},\n\nYour account has been activated.\n\nThank you,\nE-Eggcellent Team",
+                function ($mail) use ($email, $adminEmail) {
+                    $mail->to($email)
+                        ->from($adminEmail, 'E-Eggcellent')
+                        ->subject('Account Activation Notification from E-Eggcellent');
+                }
+            );
+
+            return true; // Mail sent successfully
+        } catch (\Exception $e) {
+            return false; // Failed to send
+        }
+    }
+
+    public function sendSMSNotification($apiKey, $number, $message)
+    {
+        // If there's no API key, do not proceed
+        if (empty($apiKey)) {
+            return [
+                'success' => false,
+                'message' => 'API key is missing. SMS not sent.'
+            ];
+        }
+
+        // Semaphore SMS API endpoint
+        $url = 'https://api.semaphore.co/api/v4/messages';
+
+        // Prepare POST fields
+        $params = [
+            'apikey' => $apiKey,
+            'number' => $number,
+            'message' => $message,
+            'sendername' => 'EGGCELLENT',
+        ];
+
+        // Send SMS using cURL
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        // Handle response
+        if ($error) {
+            return [
+                'success' => false,
+                'message' => 'cURL Error: ' . $error
+            ];
+        }
+
+        return [
+            'success' => true,
+            'response' => json_decode($response, true)
+        ];
+    }
 }
